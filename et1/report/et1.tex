@@ -1,0 +1,73 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Задание}
+
+\textbf{Задача 1.3--3}\\
+
+На ферме имеются разные участки. Согласно информации в таблице \ref{tab:task} определить, какую площадь каждого участка следует отвести под каждую культуру, чтобы получить запланированные объемы продукции при минимальных затратах.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Исходные данные}
+	\label{tab:task}
+	\begin{tabular}{|c|c||c|c|c|}
+		\hline
+		\multirow{2}{*}{Земля} & \multirow{2}{*}{Площадь, га} & \multicolumn{3}{c|}{Урожайность, ц/га} \\ \cline{3-5} 
+		                       &                              & Пшеница       & Рожь       & Овёс      \\ \hhline{|=|=|=|=|=|}
+		Лучшая                 & 100                          & 50            & 30         & 40        \\ \hline
+		Обыкновенная           & 200                          & 22            & 22         & 28        \\ \hline
+		Худшая                 & $\infty$                       & 13            & 14         & 24        \\ \hhline{|=|=|=|=|=|}
+		\multicolumn{2}{|c||}{Трудоёмкость, дней/га}           & 9             & 10         & 7         \\ \hline
+		\multicolumn{2}{|c||}{План, ц}                         & 4000          & 3800       & 4800      \\ \hline
+	\end{tabular}
+\end{center}
+\end{table}
+
+\section{Решение}
+
+Введём обозначения:
+
+\begin{itemize}
+
+	\item $a_i$ --- площадь $i$-го участка, $i = 1 \dots 3$.
+	
+	\item $c_{ij}$ --- урожайность $j$-й культуры на $i$-м участке, $i, j = 1 \dots 3$.
+
+	\item $k_{ij}$ --- доля $i$-го участка, выделенная под $j$-ую культуру,  $i, j = 1 \dots 3$.
+	
+	\item $t_j$ --- трудоёмкость выращивания $j$-й культуры, $j = 1 \dots 3$.
+
+	\item $p_j$ --- план по $j$-й культуре, $j = 1 \dots 3$.
+
+\end{itemize}
+
+Будем считать, что затраты прямопропорциональны количеству дней работы:
+
+\begin{equation}
+	\label{eq:2:1}
+	S = \sum_{j = 1}^{3} \left( t_j \cdot \sum_{i = 1}^{3} a_i \cdot k_{ij} \right)
+\end{equation} 
+
+Минимизируем $S$ при условии, что необходимо получить запланированные объемы продукции. Необходимые условия описываются следующей системой:
+
+\begin{equation}
+	\label{eq:2:2}
+	\sum_{i = 1}^{3} a_i \cdot k_{ij} \cdot c_{ij} \geq p_j, \hspace{5mm} j = 1 \dots 3
+\end{equation}
+
+Объединим уравнения \ref{eq:2:1} и \ref{eq:2:2} и получим ответ:
+
+\begin{equation}
+\label{eq:2:3}
+\begin{cases}
+	min \left[ \sum_{j = 1}^{3} \left( t_j \cdot \sum_{i = 1}^{3} a_i \cdot k_{ij} \right) \right] \\
+	\sum_{i = 1}^{3} a_i \cdot k_{ij} \cdot c_{ij} \geq p_j, \hspace{5mm} j = 1 \dots 3 \\
+	k_{ij} \geq 0
+\end{cases}
+\end{equation}
+
+\end{document}

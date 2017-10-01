@@ -1,0 +1,25 @@
+language: generic
+
+sudo: required
+
+dist: trusty
+
+services:
+  - docker
+
+matrix:
+  include:
+    - env: ET="et1"
+
+script:
+  - docker run -v $TRAVIS_BUILD_DIR:/sysan lamtev/latex:full /bin/bash -c " cd sysan/${ET}/report && pdflatex ${ET}.tex && pdflatex ${ET}.tex "
+  - sudo chmod 777 ${TRAVIS_BUILD_DIR}/${ET}/report/${ET}.pdf
+  
+deploy:
+  provider: releases
+  api_key: "$GITHUB_DEPLOY_TOKEN"
+  file: 
+    - ${TRAVIS_BUILD_DIR}/${ET}/report/${ET}.pdf
+  skip_cleanup: true
+  on:
+    tags: true

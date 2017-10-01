@@ -1,0 +1,10 @@
+*.aux
+*.toc
+*.pdf
+*.out
+*.gz
+*.log
+.idea
+build
+__pycache__
+db

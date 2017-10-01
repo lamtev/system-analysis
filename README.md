@@ -1,1 +1,1 @@
-# system-analysis
+# system-analysis [![Build Status](https://travis-ci.com/lamtev/system-analysis.svg?token=9FvGK5w3cEBFPgDbu729&branch=master)](https://travis-ci.com/lamtev/system-analysis)
