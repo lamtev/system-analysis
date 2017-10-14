@@ -229,6 +229,150 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 \end{aligned}
 \end{equation}
 
+\begin{enumerate}
+
+	\item Начальный базис $x_3$, $x_4$.\\
+	 $x_1$, $x_2$ -- свободные переменные.
+	
+	\begin{displaymath}
+		P = E = \begin{pmatrix}
+			1 & 0 \\ 0 & 1
+		\end{pmatrix}
+	\end{displaymath}
+
+	\item Текущий базис\\
+	\begin{displaymath}
+		x^{\text{Б}} = P^{-1}b = \begin{pmatrix}
+			1 & 0 \\ 0 & 1
+		\end{pmatrix}
+		\begin{pmatrix}
+			5.7 \\ 1.6
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			5.7 \\ 1.6
+		\end{pmatrix}
+	\end{displaymath}
+
+	\item Допустимость базиса.
+	
+	$x^{\text{Б}} > 0 \Rightarrow$ базис допустимый.
+
+	\item Оптимальность базиса.
+	
+	$c^\text{Б} = \begin{pmatrix}
+		0 & 0
+	\end{pmatrix}$
+
+	$\forall j \notin \text{Б} : \Delta_j = c^\text{Б} P^{-1} A_j - c_j$
+
+	$\Delta_1 = -1 < 0$, $\Delta_2 = -2 < 0 \Rightarrow$ базис неоптимальный.
+
+	\item Вводимая в базис переменная.
+	
+	$k = argmin_j \Delta_j = 2$
+	
+	\item Выводимая из базиса переменная.
+	
+	$z = P^{-1} A_k = P^{-1} A_2 = \begin{pmatrix}
+		1 & 0 \\ 0 & 1
+	\end{pmatrix}
+	\begin{pmatrix}
+		1 \\ -1
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		1 \\ -1
+	\end{pmatrix}$
+	
+	$r = argmin_i\left\{ \frac{x_i^{\text{Б}}}{z_i} \Bigl|_{z_i > 0} \right\}$
+	
+	$\frac{x^{\text{Б}}}{z} = \begin{pmatrix}
+		\frac{5.7}{1} \\ \frac{1.6}{-1}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		5.7 \\ -1.6
+	\end{pmatrix}$
+	
+	$r = 3$
+
+	\item Замена переменных.
+	
+	$x_r \leftrightarrow x_k$
+	
+	$x_3 \leftrightarrow x_2$
+	
+	\item Текущий базис.
+	
+	\begin{displaymath}
+		P = \begin{pmatrix}
+			1 & 0 \\ -1 & 1
+		\end{pmatrix}
+	\end{displaymath}	
+	
+	\begin{displaymath}
+		P^{-1} = \begin{pmatrix}
+			1 & 0 \\ 1 & 1
+		\end{pmatrix}
+	\end{displaymath}		
+	
+	\begin{displaymath}
+		x^{\text{Б}} = P^{-1}b = \begin{pmatrix}
+			1 & 0 \\ 1 & 1
+		\end{pmatrix}
+		\begin{pmatrix}
+			5.7 \\ 1.6
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			5.7 \\ 7.3
+		\end{pmatrix}
+	\end{displaymath}
+	
+	\item Допустимость базиса.
+	
+	$x^{\text{Б}} > 0 \Rightarrow$ базис допустимый.
+	
+	\item Оптимальность базиса.
+	
+	$c^\text{Б} = \begin{pmatrix}
+		2 & 0
+	\end{pmatrix}$	
+	
+	$\Delta_1 = \begin{pmatrix}
+		2 & 0
+	\end{pmatrix}
+	%
+	\begin{pmatrix}
+		1 & 0 \\ 1 & 1
+	\end{pmatrix}
+	%
+	\begin{pmatrix}
+		1 \\ 1
+	\end{pmatrix}
+	- 1 = 2 - 1 = 1 > 0
+	$
+	
+	$\Delta_3 = \begin{pmatrix}
+		2 & 0
+	\end{pmatrix}
+	%
+	\begin{pmatrix}
+		1 & 0 \\ 1 & 1
+	\end{pmatrix}
+	%
+	\begin{pmatrix}
+		1 \\ 0
+	\end{pmatrix}
+	- 0 = 2 - 0 = 2 > 0$	
+	
+	Базис оптимальный и решение единственное.	
+	
+	$x_1 = 0$, $x_2 = 5.7$	
+	
+\end{enumerate}
+
 \item Решим задачу симплекс-методом в табличной форме.
 
 По канонической форме (уравнение \ref{eq:2:1}) построим симплекс-таблицу \ref{tab:simplex:1}:
@@ -311,6 +455,22 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 \end{table}
 
 $\forall j \notin \text{\textbf{Б}}$, $c_j < 0$, поэтому $x_1 = 0$, $x_2 = 5.7$ -- оптимальное и единственное решение.
+
+\item Сформулируем двойственную задачу по отношению к исходной:
+
+\begin{displaymath}
+\begin{cases}
+	min \left( 5.7 \cdot y_1 + 1.6 \cdot y_2 \right)
+	\\
+	y_1 + y_2 \geq 1
+	\\
+	y_1 - y_2 \geq 2
+	\\
+	y_1 \geq 0
+	\\
+	y_2 \geq 0
+\end{cases}
+\end{displaymath}
 
 \end{enumerate}
 
