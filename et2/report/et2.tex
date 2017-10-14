@@ -45,6 +45,7 @@
 \item Приведём задачу к канонической форме:
 
 \begin{equation}
+\label{eq:2:1}
 \begin{cases}
 	max \left( x_1 + 2 \cdot x_2 \right)
 	\\
@@ -62,20 +63,254 @@
 \end{cases}
 \end{equation}	
 
-\item Решим задачу геометрическим методом.
+$x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- свободные переменные. 
+
+\item Решим задачу геометрическим методом.\\
+\noindent На рис. \ref{pic:graphic-solution} представлено графическое решение.
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[width=1\textwidth]{geometric-solution}
+	\includegraphics[width=1\textwidth]{graphic-solution}
 	\caption{Геометрическое решение}
 	\label{pic:graphic-solution}
 \end{center}
 \end{figure}
 
-На рис. \ref{pic:graphic-solution} представлено геометрическое решение.
+Только в точке $(0$, $5.7)$ достигается максимальное значение целевой функции, поэтому решение $x_1 = 0$, $x_2 = 5.7$ является оптимальным. 
 
 \item Решим задачу методом полного перебора опорных точек.\\
-\noindent Для этого обозначим все опорные точки, запишем соответствующие им наборы базисных переменных и рассчитаем значение целевой функции в каждой опорной точке.
+
+Пусть $f(x_1, x_2) = x_1 + 2 x_2$, т.е $f$ -- целевая функция. Решив системы уравнений \ref{eq:2:2} -- \ref{eq:2:7}, найдём опорные точки:
+
+\begin{equation}
+\label{eq:2:2}
+\begin{cases}
+	x_1 = 0
+	\\
+	x_2 = 0
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\begin{cases}
+	x_1 = 0
+	\\
+	x_1 - x_2 = 1.6
+\end{cases}
+\Rightarrow
+\begin{cases}
+	x_1 = 0
+	\\
+	x_2 = -1.6
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\begin{cases}
+	x_1 - x_2 = 1.6
+	\\
+	x_2 = 0
+\end{cases}
+\Rightarrow
+\begin{cases}
+	x_1 = 1.6
+	\\
+	x_2 = 0
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\begin{cases}
+	x_1 + x_2 = 5.7
+	\\
+	x_2 = 0
+\end{cases}
+\Rightarrow
+\begin{cases}
+	x_1 = 5.7
+	\\
+	x_2 = 0
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\begin{cases}
+	x_1 - x_2 = 1.6
+	\\
+	x_1 + x_2 = 5.7
+\end{cases}
+\Rightarrow
+\begin{cases}
+	x_1 = 3.65
+	\\
+	x_2 = 2.05
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\label{eq:2:7}
+\begin{cases}
+	x_1 = 0
+	\\
+	x_1 + x_2 = 5.7
+\end{cases}
+\Rightarrow
+\begin{cases}
+	x_1 = 0
+	\\
+	x_2 = 5.7
+\end{cases}
+\end{equation}
+
+Теперь определим допустимость опорных точек и посчитаем значение целевой функции в них. Результаты приведены в таблице \ref{tab:target-function}.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Значения целевой функции в опорных точках}
+	\label{tab:target-function}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c|c|}
+		\hline 
+		Опорная точка $(x_1,$ $x_2)$ & Принадлежит ОДР & Значение целевой функции \\ 
+		\hline 
+		$(0,$ $0)$ & + & 0 \\ 
+		\hline 
+		$(0,$ $-1.6)$ & -- & -3.2 \\ 
+		\hline 
+		$(1.6,$ $0)$ & + & 1.6 \\ 
+		\hline 
+		$(5.7,$ $0)$ & -- & 5.7 \\ 
+		\hline 
+		$(3.65,$ $2.05)$ & + & 7.75 \\ 
+		\hline 
+		$(0,$ $5.7)$ & + & 11.4 \\ 
+	\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+По таблице \ref{tab:target-function} видно, что $x_1 = 0$, $x_2 = 5.7$ -- оптимальное решение.
+
+\item Решим задачу симплекс-методом в матричной форме. Для этого приведём задачу к матричной форме:
+
+\begin{equation}
+\begin{aligned}
+\begin{cases}
+	max \left( c^T x \right)
+	\\
+	Ax = b
+	\\
+	b \geq 0
+	\\
+	x \geq 0
+	\end{cases}
+	%
+	\text{, где }
+	%
+	A = \begin{pmatrix}
+		1 & 1 & 1 & 0
+		\\
+		1 & -1 & 0 & 1
+	\end{pmatrix},\\
+	%
+	x = \begin{pmatrix}
+		x_1 \\ x_2 \\ x_3 \\ x_4
+	\end{pmatrix} \text{, }
+	%
+	b = \begin{pmatrix}
+		5.7 \\ 1.6
+	\end{pmatrix} \text{, }
+	%
+	c = \begin{pmatrix}
+		1 \\ 2 \\ 0 \\ 0
+	\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+\item Решим задачу симплекс-методом в табличной форме.
+
+По канонической форме (уравнение \ref{eq:2:1}) построим симплекс-таблицу \ref{tab:simplex:1}:
+
+\begin{table}[H]
+\begin{center}
+	\caption{}
+	\label{tab:simplex:1}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c||c||c|}
+	\hline
+	 & $x_1$ & $x_2$ & $b$ \\ 
+	\hhline{|=|=|=|=|} 
+	$x_3$ & -1 & \cellcolor{pink} -1 & 5.7 \\ 
+	\hhline{|=|=|=|=|} 
+	$x_4$ & -1 & 1 & 1.6 \\ 
+	\hline 
+	$f$ & 1 & 2 & 0 \\ 
+	\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+\begin{displaymath}
+\begin{cases}
+	max_{j = 1, 2}(c_j) = 2
+	\\
+	min_{(c)}\left\{\frac{-b_i}{a_{ir}}\Bigl|_{a_{ir} < 0}\right\} = 5.7
+\end{cases}
+\Rightarrow
+\text{разрезающий элемент равен } -1.
+\end{displaymath}
+
+Сделаем $x_2$ базисной переменной, а $x_3$ свободной. Разрезающий элемент заменим на 1. Элементы разрезающего столбца оставим без изменений. Элементы разрезающей строки умножим на -1. Оставшиеся элементы пересчитаем по правилу прямоугольника. Получим симплекс-таблицу \ref{tab:simplex:2}:
+
+\begin{table}[H]
+\begin{center}
+	\caption{}
+	\label{tab:simplex:2}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c||c||c|}
+	\hline
+	 & $x_1$ & $x_3$ & $b$ \\ 
+	\hhline{|=|=|=|=|} 
+	$x_2$ & 1 & \cellcolor{pink} 1 & -5.7 \\ 
+	\hhline{|=|=|=|=|} 
+	$x_4$ & 2 & 1 & -7.3 \\ 
+	\hline 
+	$f$ & 1 & 2 & -11.4 \\ 
+	\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+Теперь разделим все элементы таблицы на разрезающий элемент (-1) и получим таблицу \ref{tab:simplex:3}:
+
+\begin{table}[H]
+\begin{center}
+	\caption{}
+	\label{tab:simplex:3}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	 & $x_1$ & $x_3$ & $b$ \\ 
+	\hline 
+	$x_2$ & -1 & -1 & 5.7 \\ 
+	\hline
+	$x_4$ & -2 & -1 & 7.3 \\ 
+	\hline 
+	$f$ & -1 & -2 & 11.4 \\ 
+	\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+$\forall j \notin \text{\textbf{Б}}$, $c_j < 0$, поэтому $x_1 = 0$, $x_2 = 5.7$ -- оптимальное и единственное решение.
 
 \end{enumerate}
 
