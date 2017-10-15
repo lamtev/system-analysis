@@ -71,12 +71,12 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=1\textwidth]{graphic-solution}
-	\caption{Геометрическое решение}
+	\caption{Графическое решение}
 	\label{pic:graphic-solution}
 \end{center}
 \end{figure}
 
-Только в точке $(0$, $5.7)$ достигается максимальное значение целевой функции, поэтому решение $x_1 = 0$, $x_2 = 5.7$ является оптимальным. 
+Только в точке $(0$, $5.7)$ достигается максимальное значение целевой функции, поэтому решение $x_1 = 0$, $x_2 = 5.7$ является единственным. 
 
 \item Решим задачу методом полного перебора опорных точек.\\
 
@@ -191,7 +191,7 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 \end{center}
 \end{table}
 
-По таблице \ref{tab:target-function} видно, что $x_1 = 0$, $x_2 = 5.7$ -- оптимальное решение.
+По таблице \ref{tab:target-function} видно, что $x_1 = 0$, $x_2 = 5.7$ -- единственное решение.
 
 \item Решим задачу симплекс-методом в матричной форме. Для этого приведём задачу к матричной форме:
 
@@ -240,7 +240,7 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 		\end{pmatrix}
 	\end{displaymath}
 
-	\item Текущий базис\\
+	\item Текущий базис $x_3$, $x_4$\\
 	\begin{displaymath}
 		x^{\text{Б}} = P^{-1}b = \begin{pmatrix}
 			1 & 0 \\ 0 & 1
@@ -303,7 +303,7 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 	
 	$x_3 \leftrightarrow x_2$
 	
-	\item Текущий базис.
+	\item Текущий базис $x_2$, $x_4$.
 	
 	\begin{displaymath}
 		P = \begin{pmatrix}
@@ -367,9 +367,7 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 	\end{pmatrix}
 	- 0 = 2 - 0 = 2 > 0$	
 	
-	Базис оптимальный и решение единственное.	
-	
-	$x_1 = 0$, $x_2 = 5.7$	
+	Базис $x_2$, $x_4$ оптимальный и решение $x_1 = 0$, $x_2 = 5.7$ единственное.		
 	
 \end{enumerate}
 
@@ -444,6 +442,57 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 	\hline
 	 & $x_1$ & $x_3$ & $b$ \\ 
 	\hline 
+	$x_2$ & -1 & -1 & \cellcolor{green} 5.7 \\ 
+	\hline
+	$x_4$ & -2 & -1 & 7.3 \\ 
+	\hline 
+	$f$ & -1 & -2 & 11.4 \\ 
+	\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+$\forall j \notin \text{\textbf{Б}}$, $c_j < 0$, поэтому $x_2$, $x_4$ оптимальный базис и решение $x_1 = 0$, $x_2 = 5.7$ единственное.
+
+\item Введём дополнительное ограничение, отсекающее оптимальную точку: $x_2 \leq 5$.\\
+Объединим это условие с системой \ref{eq:2:1} и приведем к канонической форме:
+
+\begin{equation}
+\label{eq:simpl:double:canonic}
+\begin{cases}
+	max \left( x_1 + 2 \cdot x_2 \right)
+	\\
+	x_3 = 5.7 - x_1 - x_2
+	\\
+	x_4 = 1.6 - x_1 + x_2
+	\\
+	x_5 = 5 - x_2
+	\\
+	x_1 \geq 0
+	\\
+	x_2 \geq 0
+	\\
+	x_3 \geq 0	
+	\\
+	x_4 \geq 0
+	\\
+	x_5 \geq 0
+\end{cases}
+\end{equation}	
+
+Решим новую задачу двойственным симплекс-методом в табличной форме, в качестве начального базиса используя оптимальный базис исходной задачи --- $x_2$, $x_4$. В таблице \ref{tab:simplex:double:1} оптимальный базис исходной задачи.
+
+\begin{table}[H]
+\begin{center}
+	\caption{}
+	\label{tab:simplex:double:1}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	 & $x_1$ & $x_3$ & $b$ \\ 
+	\hline 
 	$x_2$ & -1 & -1 & 5.7 \\ 
 	\hline
 	$x_4$ & -2 & -1 & 7.3 \\ 
@@ -454,7 +503,69 @@ $x_3$, $x_4$ -- базисные переменные, а $x_1$, $x_2$ -- сво
 \end{center}
 \end{table}
 
-$\forall j \notin \text{\textbf{Б}}$, $c_j < 0$, поэтому $x_1 = 0$, $x_2 = 5.7$ -- оптимальное и единственное решение.
+Добавим новое условие
+
+\begin{table}[H]
+\begin{center}
+	\caption{}
+	\label{tab:simplex:double:2}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c||c|c|}
+	\hline
+	 & $x_1$ & $x_3$ & $b$ \\ 
+	\hline 
+	$x_2$ & -1 & -1 & 5.7 \\ 
+	\hline
+	$x_4$ & -2 & -1 & 7.3 \\ 
+	\hhline{|=|=|=|=|}
+	$x_5$ & \cellcolor{pink} 1 & 1 & -0.7 \\
+	\hhline{|=|=|=|=|}
+	$f$ & -1 & -2 & 11.4 \\ 
+	\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+Псевдоплан $x_2$, $x_4$, $x_5$ допустимый, но не оптимальный. Разрезающий элемент выделен цветом.
+
+Сделаем $x_1$ базисной переменной, а $x_5$ свободной. Разрезающий элемент заменим на 1. Элементы разрезающего столбца оставим без изменений. Элементы разрезающей строки умножим на -1. Оставшиеся элементы пересчитаем по правилу прямоугольника. Затем все элементы разделим на разрезающий. Получим симплекс-таблицу \ref{tab:simplex:double:3}:
+
+\begin{table}[H]
+\begin{center}
+	\caption{}
+	\label{tab:simplex:double:3}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	 & $x_5$ & $x_3$ & $b$ \\ 
+	\hline 
+	$x_2$ & -1 & 0 & \cellcolor{green} 5 \\ 
+	\hline
+	$x_4$ & -2 & 1 & 5.9 \\ 
+	\hline
+	$x_1$ & 1 & -1 & \cellcolor{green} 0.7 \\
+	\hline
+	$f$ & -1 & -1 & 10.7 \\ 
+	\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+Псевдоплан $x_1$, $x_2$, $x_4$ допустимый и оптимальный. Единственное решение $x_1 = 0.7$, $x_2 = 5$.
+
+На рис. \ref{pic:additional-limit} представлено графическое решение новой задачи.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=1\textwidth]{additional-limit}
+	\caption{Графическое решение}
+	\label{pic:additional-limit}
+\end{center}
+\end{figure}
 
 \item Сформулируем двойственную задачу по отношению к исходной:
 
