@@ -1,0 +1,154 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Задание}
+
+Дана задача нелинейного программирования:
+
+\begin{displaymath}
+	max \left( -17 x^2_1 - 23 x^2_2 + 8 x_1 x_2 + 182 x_1 + 266 x_2 \right)
+\end{displaymath}
+
+\begin{enumerate}
+
+	\item Записать условие оптимальности и решить задачу аналитически.
+	
+	\item Решить задачу методом релаксации.
+	
+	\item Решить задачу методом наискорейшего подъема.
+	
+	\item Решить задачу методом Ньютона.	
+	
+	\item Решить задачу методом сопряжённых градиентов.
+
+	\item Решить задачу методом Бройдена.
+	
+	\item Решить задачу методами 2--6, выбрав ещё 3 начальных точки. Графики сгруппировать по методам: на одном графике траектории поиска решения задачи из четырёх разных начальных точек одним методом, на другом графике – другим методом и т.д. 
+
+\end{enumerate}
+
+\section{Решение}
+
+\subsection{Аналитическое решение}
+
+Решим задачу аналитически. Для этого запишем условие оптимальности:
+
+\begin{equation}
+\label{eq:opt-cond}
+	\nabla f(X) \Big|_{X = X^*} = \left(  \frac{\partial f}{\partial x_1}(X) \hspace{7mm} \frac{\partial f}{\partial x_2}(X) \right)^T \Big|_{X = X^*} = 0, \hspace{5mm} X = 
+	%
+	\begin{pmatrix}
+		x_1
+		\\
+		x_2
+	\end{pmatrix}
+\end{equation}
+
+Вычислим частные производные первого порядка целевой функции:
+
+\begin{equation*}
+	\frac{\partial f}{\partial x_1}(X) = -34 x_1 + 8 x_2 + 182
+\end{equation*}
+
+\begin{equation*}
+	\frac{\partial f}{\partial x_2}(X) = -46 x_2 + 8 x_1 + 266
+\end{equation*}
+
+Подставим их в уравнение \ref{eq:opt-cond} и решим полученную систему уравнений:
+
+\begin{equation*}
+	\begin{pmatrix}
+		-34 x_1 + 8 x_2 + 182
+		\\
+		-46 x_2 + 8 x_1 + 266
+	\end{pmatrix}
+	%
+	= 0
+	%
+	\Rightarrow
+	\begin{pmatrix}
+		-34 & 8
+		\\
+		-46 & 8 x_1
+	\end{pmatrix}
+	\cdot X^* =
+	\begin{pmatrix}
+		-182
+		\\
+		-266
+	\end{pmatrix}
+	\Rightarrow
+\end{equation*}
+
+\begin{equation*}
+	\Rightarrow X^* = 
+	\begin{pmatrix}
+		7
+		\\
+		7
+	\end{pmatrix}
+	\text{ -- оптимальная точка}
+\end{equation*}
+
+Запишем достаточное условие максимума:
+
+\begin{equation}
+\label{eq:enough-cond}
+	H(X) \Big|_{X=X^*} = 
+	\begin{pmatrix}
+		\frac{\partial^2 f}{\partial x^2_1}(X) && \frac{\partial^2 f}{\partial x_1 \partial x_2}(X)
+		\\
+		\frac{\partial^2 f}{\partial x_1 \partial x_2}(X) && \frac{\partial^2 f}{\partial x^2_2}(X)
+	\end{pmatrix}
+	\Big|_{X=X^*}
+	\text{-- отрицательно определена}
+\end{equation}
+
+Вычислим частные производные второго порядка целевой функции:
+
+\begin{equation*}
+	\frac{\partial^2 f}{\partial x^2_1}(X) = -34
+\end{equation*}
+
+\begin{equation*}
+	\frac{\partial^2 f}{\partial x_1 \partial x_2}(X) = 8
+\end{equation*}
+
+\begin{equation*}
+	\frac{\partial^2 f}{\partial x^2_2}(X) = - 46
+\end{equation*}
+
+Подставим их в уравнение \ref{eq:enough-cond} и получим:
+
+\begin{equation*}
+	H(X) = 
+	\begin{pmatrix}
+		-34 && 8
+		\\
+		8 && -46
+	\end{pmatrix}
+\end{equation*}
+
+Согласно критерию Сильвестра (Действительная квадратичная форма является отрицательно определенной тогда и только тогда, когда знаки главных миноров ее матрицы чередуются, причем $\Delta_1 < 0$), полученная матрица Гёссе отрицательно определена, т.к $\Delta_1 = h_{11} = -34 < 0$ и $\Delta_2 =%
+\begin{vmatrix}% 
+	h_{11} & h_{12}%
+	\\
+	h_{21} & h_{22}
+\end{vmatrix} =%
+=
+\begin{vmatrix}% 
+	-34 & 8%
+	\\
+	8 & -46
+\end{vmatrix} =1500 > 0$
+
+Следовательно $X = \begin{pmatrix}
+	7
+	\\
+	7
+\end{pmatrix}$ -- решение.
+
+\end{document}
