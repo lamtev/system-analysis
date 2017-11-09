@@ -25,10 +25,10 @@
 	\item Решить задачу методом сопряжённых градиентов.
 
 	\item Решить задачу методом Бройдена.
-	
-	\item Решить задачу методами 2--6, выбрав ещё 3 начальных точки. Графики сгруппировать по методам: на одном графике траектории поиска решения задачи из четырёх разных начальных точек одним методом, на другом графике – другим методом и т.д. 
 
 \end{enumerate}
+
+Решить задачу методами 2 -- 6, выбрав ещё 3 начальных точки. Графики сгруппировать по методам: на одном графике траектории поиска решения задачи из четырёх разных начальных точек одним методом, на другом графике – другим методом и т.д. 
 
 \section{Решение}
 
@@ -124,7 +124,7 @@
 Подставим их в уравнение \ref{eq:enough-cond} и получим:
 
 \begin{equation*}
-	H(X) = 
+	H(X) = const(X) =
 	\begin{pmatrix}
 		-34 && 8
 		\\
@@ -132,12 +132,12 @@
 	\end{pmatrix}
 \end{equation*}
 
-Согласно критерию Сильвестра (Действительная квадратичная форма является отрицательно определенной тогда и только тогда, когда знаки главных миноров ее матрицы чередуются, причем $\Delta_1 < 0$), полученная матрица Гёссе отрицательно определена, т.к $\Delta_1 = h_{11} = -34 < 0$ и $\Delta_2 =%
+Согласно критерию Сильвестра (действительная квадратичная форма является отрицательно определенной тогда и только тогда, когда знаки главных миноров ее матрицы чередуются, причем $\Delta_1 < 0$), полученная матрица Гессе отрицательно определена, т.к $\Delta_1 = h_{11} = -34 < 0$ и $\Delta_2 =%
 \begin{vmatrix}% 
 	h_{11} & h_{12}%
 	\\
 	h_{21} & h_{22}
-\end{vmatrix} =%
+\end{vmatrix} = \\
 =
 \begin{vmatrix}% 
 	-34 & 8%
@@ -145,10 +145,533 @@
 	8 & -46
 \end{vmatrix} =1500 > 0$
 
-Следовательно $X = \begin{pmatrix}
+Следовательно $X^* = \begin{pmatrix}
 	7
 	\\
 	7
 \end{pmatrix}$ -- решение.
+
+\subsection{Метод релаксации}
+
+Решим задачу методом релаксации для четырёх разных начальных точек: $X_1^{(0)} = (0, 0)$, $X_2^{(0)} = (3, 5)$, $X_3^{(0)} = (9, 10)$, $X_4^{(0)} = (14, 6)$.\\
+
+Для этого разработаем прорграмму на языке программирования \textbf{Python} c использованием стандартной библиотеки и пакетов \textbf{NumPy}, \textbf{SciPy}, \textbf{CSV}, \textbf{Matplotlib}, которая реализует данный метод и позволит визуализировать результаты в виде таблиц и графиков.  Исходный код приведён в \hyperref[sec:application]{приложении}.\\
+
+В таблицах \ref{tab:trajectory-relax-0} -- \ref{tab:trajectory-relax-3} приведены траектории поиска решения для всех начальных точек.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_1^{(0)} = (0, 0)$}
+	\label{tab:trajectory-relax-0}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/relax0.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_2^{(0)} = (3, 5)$}
+	\label{tab:trajectory-relax-1}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/relax1.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (9, 10)$}
+	\label{tab:trajectory-relax-2}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/relax2.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (14, 6)$}
+	\label{tab:trajectory-relax-3}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/relax3.csv}
+\end{center}
+\end{table}
+
+Решение задачи для всех выбранных начальных точек сошлось к\\ $X^* = (7, 7)$ и $f(X^*) = 1568$.\\
+
+На рис. \ref{pic:relax} представлен график решения задачи.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{relax}
+	\caption{Линии равного уровня целевой функции и траектории поиска решения}
+	\label{pic:relax}
+\end{center}
+\end{figure}
+
+
+\subsection{Метод наискорейшего подъёма}
+
+Решим задачу методом наискорейшего подъёма для четырёх разных начальных точек: $X_1^{(0)} = (0, 0)$, $X_2^{(0)} = (3, 5)$, $X_3^{(0)} = (9, 10)$, $X_4^{(0)} = (14, 6)$.\\
+
+Для этого разработаем прорграмму на языке программирования \textbf{Python} c использованием стандартной библиотеки и пакетов \textbf{NumPy}, \textbf{SciPy}, \textbf{CSV}, \textbf{Matplotlib}, которая реализует данный метод и позволит визуализировать результаты в виде таблиц и графиков.  Исходный код приведён в \hyperref[sec:application]{приложении}.\\
+
+В таблицах \ref{tab:trajectory-gd-0} -- \ref{tab:trajectory-gd-3} приведены траектории поиска решения для всех начальных точек.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_1^{(0)} = (0, 0)$}
+	\label{tab:trajectory-relax-0}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/gd0.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_2^{(0)} = (3, 5)$}
+	\label{tab:trajectory-gd-1}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/gd1.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (9, 10)$}
+	\label{tab:trajectory-gd-2}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/gd2.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (14, 6)$}
+	\label{tab:trajectory-gd-3}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/gd3.csv}
+\end{center}
+\end{table}
+
+Решение задачи для всех выбранных начальных точек сошлось к\\ $X^* = (7, 7)$ и $f(X^*) = 1568$.\\
+
+На рис. \ref{pic:gd} представлен график решения задачи.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.89]{gd}
+	\caption{Линии равного уровня целевой функции и траектории поиска решения}
+	\label{pic:gd}
+\end{center}
+\end{figure}
+
+\subsection{Метод Ньютона}
+
+Решим задачу методом Ньютона для четырёх разных начальных точек: $X_1^{(0)} = (0, 0)$, $X_2^{(0)} = (3, 5)$, $X_3^{(0)} = (9, 10)$, $X_4^{(0)} = (14, 6)$.\\
+
+Для этого разработаем прорграмму на языке программирования \textbf{Python} c использованием стандартной библиотеки и пакетов \textbf{NumPy}, \textbf{SciPy}, \textbf{CSV}, \textbf{Matplotlib}, которая реализует данный метод и позволит визуализировать результаты в виде таблиц и графиков.  Исходный код приведён в \hyperref[sec:application]{приложении}.\\
+
+В таблицах \ref{tab:trajectory-newton-0} -- \ref{tab:trajectory-newton-3} приведены траектории поиска решения для всех начальных точек.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_1^{(0)} = (0, 0)$}
+	\label{tab:trajectory-newton-0}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/newton0.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_2^{(0)} = (3, 5)$}
+	\label{tab:trajectory-newton-1}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/newton1.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (9, 10)$}
+	\label{tab:trajectory-newton-2}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/newton2.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (14, 6)$}
+	\label{tab:trajectory-newton-3}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/newton3.csv}
+\end{center}
+\end{table}
+
+Решение задачи для всех выбранных начальных точек сошлось к\\ $X^* = (7, 7)$ и $f(X^*) = 1568$.\\
+
+На рис. \ref{pic:newton} представлен график решения задачи.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{newton}
+	\caption{Линии равного уровня целевой функции и траектории поиска решения}
+	\label{pic:newton}
+\end{center}
+\end{figure}
+
+\subsection{Метод сопряжённых градиентов}
+
+Решим задачу методом сопряжённых градиентов для четырёх разных начальных точек: $X_1^{(0)} = (0, 0)$, $X_2^{(0)} = (3, 5)$, $X_3^{(0)} = (9, 10)$, $X_4^{(0)} = (14, 6)$.\\
+
+Для этого разработаем прорграмму на языке программирования \textbf{Python} c использованием стандартной библиотеки и пакетов \textbf{NumPy}, \textbf{SciPy}, \textbf{CSV}, \textbf{Matplotlib}, которая реализует данный метод и позволит визуализировать результаты в виде таблиц и графиков.  Исходный код приведён в \hyperref[sec:application]{приложении}.\\
+
+В таблицах \ref{tab:trajectory-cg-0} -- \ref{tab:trajectory-cg-3} приведены траектории поиска решения для всех начальных точек.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_1^{(0)} = (0, 0)$}
+	\label{tab:trajectory-cg-0}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/cg0.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_2^{(0)} = (3, 5)$}
+	\label{tab:trajectory-cg-1}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/cg1.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (9, 10)$}
+	\label{tab:trajectory-cg-2}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/cg2.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (14, 6)$}
+	\label{tab:trajectory-cg-3}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=5, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=5, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=5, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/cg3.csv}
+\end{center}
+\end{table}
+
+Решение задачи для всех выбранных начальных точек сошлось к\\ $X^* = (7, 7)$ и $f(X^*) = 1568$.\\
+
+На рис. \ref{pic:cg} представлен график решения задачи.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{cg}
+	\caption{Линии равного уровня целевой функции и траектории поиска решения}
+	\label{pic:cg}
+\end{center}
+\end{figure}
+
+\subsection{Метод Бройдена}
+
+Решим задачу методом Бройдена для четырёх разных начальных точек: $X_1^{(0)} = (0, 0)$, $X_2^{(0)} = (3, 5)$, $X_3^{(0)} = (9, 10)$, $X_4^{(0)} = (14, 6)$.\\
+
+Для этого разработаем прорграмму на языке программирования \textbf{Python} c использованием стандартной библиотеки и пакетов \textbf{NumPy}, \textbf{SciPy}, \textbf{CSV}, \textbf{Matplotlib}, которая реализует данный метод и позволит визуализировать результаты в виде таблиц и графиков.  Исходный код приведён в \hyperref[sec:application]{приложении}.\\
+
+В таблицах \ref{tab:trajectory-bfgs-0} -- \ref{tab:trajectory-bfgs-3} приведены траектории поиска решения для всех начальных точек.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_1^{(0)} = (0, 0)$}
+	\label{tab:trajectory-bfgs-0}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=10, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=10, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=10, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/bfgs0.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_2^{(0)} = (3, 5)$}
+	\label{tab:trajectory-bfgs-1}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=10, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=10, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=10, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/bfgs1.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (9, 10)$}
+	\label{tab:trajectory-bfgs-2}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=10, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=10, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=10, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/bfgs2.csv}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения при $X_3^{(0)} = (14, 6)$}
+	\label{tab:trajectory-bfgs-3}
+	\def\tabcolsep{10pt}
+	\def\arraystretch{1.23}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={it, x1, x2, f},
+	    column type/.add={|c|c|c|c|}{},
+	    columns/it/.style={fixed, precision=0, zerofill, column name={Итерация}},
+	    columns/x1/.style={fixed, precision=10, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=10, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=10, zerofill, column name={$f(x_1, x_2)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline},
+	    every last row/.style={after row=\hline}
+	   ]{data/bfgs3.csv}
+\end{center}
+\end{table}
+
+Решение задачи для всех выбранных начальных точек сошлось к\\ $X^* = (7, 7)$ и $f(X^*) = 1568$.\\
+
+На рис. \ref{pic:bfgs} представлен график решения задачи.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{bfgs}
+	\caption{Линии равного уровня целевой функции и траектории поиска решения}
+	\label{pic:bfgs}
+\end{center}
+\end{figure}
+
+\section{Приложение. Исходный код} \label{sec:application}
 
 \end{document}
