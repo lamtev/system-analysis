@@ -574,12 +574,12 @@
 
 Для этого разработаем прорграмму на языке программирования \textbf{Python} c использованием стандартной библиотеки и пакетов \textbf{NumPy}, \textbf{SciPy}, \textbf{CSV}, \textbf{Matplotlib}, которая реализует данный метод и позволит визуализировать результаты в виде таблиц и графиков.  Исходный код приведён в \hyperref[sec:application]{приложении}.\\
 
-В таблицах \ref{tab:trajectory-bfgs-0} -- \ref{tab:trajectory-bfgs-3} приведены траектории поиска решения для всех начальных точек.
+В таблицах \ref{tab:trajectory-broyden-0} -- \ref{tab:trajectory-broyden-3} приведены траектории поиска решения для всех начальных точек.
 
 \begin{table}[H]
 \begin{center}
 	\caption{Траектория поиска решения при $X_1^{(0)} = (0, 0)$}
-	\label{tab:trajectory-bfgs-0}
+	\label{tab:trajectory-broyden-0}
 	\def\tabcolsep{10pt}
 	\def\arraystretch{1.23}
 	\fontsize{13}{14}\selectfont
@@ -593,14 +593,14 @@
 	    every nth row={1}{before row=\hline},
 	    every head row/.style={before row=\hline, after row=\hline},
 	    every last row/.style={after row=\hline}
-	   ]{data/bfgs0.csv}
+	   ]{data/broyden0.csv}
 \end{center}
 \end{table}
 
 \begin{table}[H]
 \begin{center}
 	\caption{Траектория поиска решения при $X_2^{(0)} = (3, 5)$}
-	\label{tab:trajectory-bfgs-1}
+	\label{tab:trajectory-broyden-1}
 	\def\tabcolsep{10pt}
 	\def\arraystretch{1.23}
 	\fontsize{13}{14}\selectfont
@@ -614,14 +614,14 @@
 	    every nth row={1}{before row=\hline},
 	    every head row/.style={before row=\hline, after row=\hline},
 	    every last row/.style={after row=\hline}
-	   ]{data/bfgs1.csv}
+	   ]{data/broyden1.csv}
 \end{center}
 \end{table}
 
 \begin{table}[H]
 \begin{center}
 	\caption{Траектория поиска решения при $X_3^{(0)} = (9, 10)$}
-	\label{tab:trajectory-bfgs-2}
+	\label{tab:trajectory-broyden-2}
 	\def\tabcolsep{10pt}
 	\def\arraystretch{1.23}
 	\fontsize{13}{14}\selectfont
@@ -635,14 +635,14 @@
 	    every nth row={1}{before row=\hline},
 	    every head row/.style={before row=\hline, after row=\hline},
 	    every last row/.style={after row=\hline}
-	   ]{data/bfgs2.csv}
+	   ]{data/broyden2.csv}
 \end{center}
 \end{table}
 
 \begin{table}[H]
 \begin{center}
 	\caption{Траектория поиска решения при $X_3^{(0)} = (14, 6)$}
-	\label{tab:trajectory-bfgs-3}
+	\label{tab:trajectory-broyden-3}
 	\def\tabcolsep{10pt}
 	\def\arraystretch{1.23}
 	\fontsize{13}{14}\selectfont
@@ -656,19 +656,19 @@
 	    every nth row={1}{before row=\hline},
 	    every head row/.style={before row=\hline, after row=\hline},
 	    every last row/.style={after row=\hline}
-	   ]{data/bfgs3.csv}
+	   ]{data/broyden3.csv}
 \end{center}
 \end{table}
 
 Решение задачи для всех выбранных начальных точек сошлось к\\ $X^* = (7, 7)$ и $f(X^*) = 1568$.\\
 
-На рис. \ref{pic:bfgs} представлен график решения задачи.
+На рис. \ref{pic:broyden} представлен график решения задачи.
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[scale=1]{bfgs}
+	\includegraphics[scale=1]{broyden}
 	\caption{Линии равного уровня целевой функции и траектории поиска решения}
-	\label{pic:bfgs}
+	\label{pic:broyden}
 \end{center}
 \end{figure}
 
