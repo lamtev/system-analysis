@@ -1,0 +1,554 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Задание}
+
+Дана задача нелинейного программирования:
+
+\begin{equation}
+\label{eq:target}
+	max \left( -17 x^2_1 - 23 x^2_2 + 8 x_1 x_2 + 182 x_1 + 266 x_2 \right)
+\end{equation}
+
+\begin{enumerate}
+
+	\item Решить задачу методом Лагранжа при ограничении: 
+	
+		\begin{equation}
+		\label{eq:lagrange-constraints}
+			0 \cdot x_1 + 1 \cdot x_2 = 4
+		\end{equation}
+	
+	\item Записать необходимые условия оптимальности для задачи при ограничениях:
+	
+		\begin{equation}
+		\label{eq:bil-constraints}
+			\begin{cases}
+				9 x_1 + 7 x_2 \leq 63
+				\\
+				-x_1 + x_2 \leq 4
+				\\
+				-x_1 \leq 0
+				\\
+				-x_2 \leq 0
+			\end{cases}
+		\end{equation}
+	
+	\item Решить задачу методом наискорейшего подъема.
+	
+	\item Решить задачу методом Ньютона.	
+	
+	\item Решить задачу методом сопряжённых градиентов.
+
+	\item Решить задачу методом Бройдена.
+
+\end{enumerate}
+
+\section{Решение}
+
+\subsection{Метод Лагранжа}
+
+Запишем функцию Лагранжа для целевой функции \ref{eq:target} и заданного ограничения \ref{eq:lagrange-constraints}
+
+\begin{equation*}
+	L(X, V) = -17 x^2_1 - 23 x^2_2 + 8 x_1 x_2 + 182 x_1 + 266 x_2 + v(x_2 - 4)
+\end{equation*}
+
+Запишем условие стационарности $L(X, V)$ в точке $(X^*, V^*)$:
+
+\begin{equation*}
+	\begin{cases}
+		\frac{\partial L}{\partial x_1} = -34 x_1 + 8 x_2 + 182 = 0
+		\\
+		\frac{\partial L}{\partial x_2} = -46 x_2 + 8 x_1 + 266 + v = 0
+		\\
+		\frac{\partial L}{\partial v} = x_2 - 4 = 0
+	\end{cases}
+\end{equation*}
+
+Найдём $(X^*,\ V^*)$:
+
+\begin{equation*}
+	(X^*,\ V^*) = \left( \frac{17}{107},\ 4,\ -\frac{7840}{107} \right)
+\end{equation*}
+
+Вычислим матрицу Гессе для функции $L(X, V)$:
+
+\begin{equation*}
+	H = \begin{pmatrix}
+		-34 & 8
+		\\
+		8 & -46
+	\end{pmatrix}
+\end{equation*}
+
+Согласно критерию Сильвестра $H$ - отрицательно определённая. Следовательно $(X^*,\ V^*)$ -- точка максимума $L(X, V)$, а точка $X^* = \left(\frac{17}{107},\ 4 \right)$ -- решение поставленной задачи.
+
+\subsection{Условия оптимальности}
+
+Запишем необходимые условия оптимальности для задачи с ограничениями. Преобразуем систему с ограничениями \ref{eq:bil-constraints} к следующему виду:
+
+\begin{equation*}
+	\begin{cases}
+		9 x_1 + 7 x_2 - 63 \leq 0
+		\\
+		-x_1 + x_2 - 4 \leq 0
+		\\
+		x_1,\ x_2 \geq 0
+	\end{cases}
+\end{equation*}
+
+В данном случае необходимым условием оптимальности будет следующее условие Куна-Такера:
+
+\begin{equation}
+\label{eq:kt}
+	\begin{cases}
+		f^{'}(X^*) + \sum\limits_{j = 1}^J u_j \cdot g^{'}_j(X^*) = 0
+		\\
+		u_j \cdot g_j(X^*) = 0,\ j = 1 \dots J
+		\\
+		u_j \leq 0,\ \text{если}\ g_j(X) \leq 0
+		\\
+		u_j \geq 0,\ \text{если}\ g_j(X) \geq 0
+	\end{cases}
+\end{equation}
+
+Вычислим градиенты целевой функции и функций-ограничений:
+
+\begin{equation*}
+	\nabla f(X) = \left(  \frac{\partial f}{\partial x_1}(X) \hspace{7mm} \frac{\partial f}{\partial x_2}(X) \right)^T = \begin{pmatrix}
+		-34 x_1 + 8 x_2 + 182
+		\\
+		-46 x_2 + 8 x_1 + 266
+	\end{pmatrix}
+\end{equation*}
+
+\begin{equation*}
+	\nabla g_1 = \left( 9 \hspace{5mm} 7 \right)^T
+\end{equation*}
+
+\begin{equation*}
+	\nabla g_2 = \left( -1 \hspace{5mm} 1 \right)^T
+\end{equation*}
+
+\begin{equation*}
+	\nabla g_3 = \left( 1 \hspace{5mm} 0 \right)^T
+\end{equation*}
+
+\begin{equation*}
+	\nabla g_4 = \left( 0 \hspace{5mm} 1 \right)^T
+\end{equation*}
+
+Подставим вычисленные градиенты в уравнение \ref{eq:kt} и получим необходимые условия оптимальности $X^*$:
+
+\begin{equation*}
+	\begin{cases}
+		\left( -34 x_1 + 8 x_2 + 182 \right) \Big|_{(x_1, x_2) = X^*} + u_1 \cdot 9 + u_2 \cdot (-1) + u_3 \cdot 1 + u_4 \cdot 0 = 0
+		\\
+		\left( -46 x_2 + 8 x_1 + 266 \right) \Big|_{(x_1, x_2) = X^*} + u_1 \cdot 7 + u_2 \cdot 1 + u_3 \cdot 0 + u_4 \cdot 1 = 0
+		\\
+		u_1 \cdot (9 x_1 + 7 x_2 - 63) \Big|_{(x_1, x_2) = X^*} = 0
+		\\
+		u_2 \cdot (-x_1 + x_2 - 4) \Big|_{(x_1, x_2) = X^*} = 0
+		\\
+		u_3 \cdot x_1 \Big|_{(x_1, x_2) = X^*} = 0
+		\\
+		u_4 \cdot x_2 \Big|_{(x_1, x_2) = X^*} = 0
+		\\
+		u_1 \leq 0
+		\\
+		u_2 \leq 0
+		\\
+		u_3 \geq 0
+		\\
+		u_4 \geq 0\
+	\end{cases}
+\end{equation*}
+
+\subsection{Метод Била}
+
+Введём дополнительные переменные $x_3$ и $x_4$ и преобразуем систему ограничений \ref{eq:bil-constraints} к следующему виду:
+
+\begin{equation*}
+\begin{cases}
+	9 x_1 + 7 x_2 + x_3 = 63
+	\\
+	- x_1 + x_2 + x_4 = 4
+	\\
+	x_i \geq 0,\ i = 1 \dots 4
+\end{cases}
+\end{equation*}
+
+\paragraph{Шаг 1. Формирование начального базиса $\text{Б}_0$}
+
+Пусть $\text{Б}_0 = (3,\ 4)$, тогда $X^{(0)} = (0,\ 0,\ 63,\ 4)^T$ -- допустимое базисное решение.
+
+\paragraph{Шаг 2. Построение и анализ симплекс-таблицы.}
+
+Построим симплекс-таблицу \ref{tab:simpl:1}:
+
+\begin{table}[H]
+\begin{center}
+	\caption{Симплекс-таблица для базисного решения $X^{(0)}$}
+	\label{tab:simpl:1}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c||c||c|}
+		\hline 
+		$X^{(0)}$ & $x_1$ & $x_2$ & $b$ \\ 
+		\hline 
+		$x_3$ & -9 & -7 & 63 \\ 
+		\hhline{|=|=||=|=|}
+		$x_4$ & 1 & \cellcolor{pink} -1 & 4 \\ 
+		\hhline{|=|=||=|=|}
+		$\frac{\partial f}{\partial x_r} \left(X^{(0)} \right)$ & 182 & 266 &  \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+Т.к. $c = (182\ \ 266)^T > 0$, базисное решение $X^{(0)}$ -- неоптимально.
+
+Разрезающий столбец --- $x_2$, т.к. ей соответствует максимальная производная целевой функции --- 266.
+
+Определим разрезающую строку. Для этого найдём соотношение между приращением свободной переменной $x_2$ и изменениями базисных переменных $x_3$, $x_4$ и производной $\frac{\partial f}{\partial x_2} \left(X \right)$:
+
+\begin{equation*}
+	\frac{\partial f}{\partial x_2} \left(X \right) = 0 \Rightarrow x_2 = \frac{266}{46} \approx 5.78
+\end{equation*}
+
+\begin{equation*}
+	x_3 = 0\ \ \Rightarrow x_2 = \frac{63}{7} = 9
+\end{equation*}
+
+\begin{equation*}
+	x_4 = 0\ \ \Rightarrow x_2 = \frac{4}{1} = 4
+\end{equation*}
+
+Переменная $x_4$ обращается в нуль раньше остальных, поэтому ей соответствует разрезающая строка.
+
+Разрезающий элемент $-1$ выделен цветом в симплекс-таблице \ref{tab:simpl:1}. 
+
+\paragraph{Шаг 3. Пересчёт симплекс-таблицы для базисного решения $X^{(1)}$.}
+
+Пересчитаем симплекс-таблицу \ref{tab:simpl:1} и получим симплекс-таблицу \ref{tab:simpl:2}.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Симплекс-таблица для базисного решения $X^{(1)}$}
+	\label{tab:simpl:2}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c||c|c|}
+		\hline 
+		$X^{(0)}$ & $x_1$ & $x_4$ & $b$ \\ 
+		\hhline{|=||=||=|=|} 
+		$x_3$ & \cellcolor{pink} -16 & 7 & 35 \\ 
+		\hhline{|=||=||=|=|}
+		$x_2$ & 1 & -1 & 4 \\ 
+		\hline
+		$\frac{\partial f}{\partial x_r} \left(X^{(0)} \right)$ & 448 & -266 &  \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+\begin{equation*}
+	f(X) = -17 x_1^2 - 23 (x_1 - x_4)^2 + 8 x_1 (x_1 - x_4) + 182 x_1 + 266 (x_1 - x_4)
+\end{equation*}
+
+Решение $X^{(1)} = (0,\ 4,\, 35,\ 0)^T$ --- допустимое, но не оптимальное, т.к. $c = (448\ \ -266)^T \nleq 0$.
+
+Разрезающий столбец --- $x_1$, т.к. ей соответствует максимальная производная целевой функции --- 448.
+
+Определим разрезающую строку. Для этого найдём соотношение между приращением свободной переменной $x_1$ и изменениями базисных переменных $x_2$, $x_3$ и производной $\frac{\partial f}{\partial x_1} \left(X \right)$:
+
+\begin{equation*}
+	\frac{\partial f(X)}{\partial x_1} = -64 x_1 + 38 x_4 + 448
+\end{equation*}
+
+\begin{equation*}
+	\frac{\partial f(X)}{\partial x_1} = 0 \Rightarrow x_1 = \frac{448}{64} = 7
+\end{equation*}
+
+\begin{equation*}
+	x_3 = 0\ \ \Rightarrow x_1 = \frac{35}{16} \approx 2.188
+\end{equation*}
+
+\begin{equation*}
+	x_2 = 0 \Rightarrow \ \ \ x_1 = \frac{4}{1} = 4
+\end{equation*}
+
+Переменная $x_3$ обращается в нуль раньше остальных, поэтому ей соответствует разрезающая строка.
+
+Разрезающий элемент $-16$ выделен цветом в симплекс-таблице \ref{tab:simpl:2}. 
+
+\paragraph{Шаг 4. Пересчёт симплекс-таблицы базисного для решения $X^{(2)}$.}
+
+Пересчитаем симплекс-таблицу \ref{tab:simpl:2} и получим симплекс-таблицу \ref{tab:simpl:3}.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Симплекс-таблица для базисного решения $X^{(2)}$}
+	\label{tab:simpl:3}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		$X^{(0)}$ & $x_3$ & $x_4$ & $b$ \\ 
+		\hline
+		$x_1$ & $-\frac{1}{16}$ & $\frac{7}{16}$ & \cellcolor{green} $\frac{35}{16}$ \\ 
+		\hline
+		$x_2$ & $-\frac{1}{16}$ & -$\frac{9}{16}$ & \cellcolor{green} $\frac{99}{16}$ \\ 
+		\hline
+		$\frac{\partial f}{\partial x_r} \left(X^{(0)} \right)$ & -28 & -70 &  \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
+\end{table}
+
+
+Решение $X^{(2)} = \left(\frac{35}{16},\ \frac{99}{16} ,\, 0,\ 0\right)^T$ --- допустимое и оптимальное, т.к. $c = (-28\ \ -70)^T < 0$.
+
+\begin{equation*}
+	X^* = \left(\frac{35}{16},\ \frac{99}{16} \right)\ \text{-- решение исходной задачи условной оптимизиции.}
+\end{equation*}
+
+\subsection{Метод проекции градиента}
+
+Запишем ограничения \ref{eq:bil-constraints} в матричной форме:
+
+\begin{equation*}
+	A \cdot X \leq b, 
+\end{equation*}
+
+\begin{equation*}
+	A = \begin{pmatrix}
+		9 & 7
+		\\
+		-1 & 1
+		\\
+		-1 & 0
+		\\
+		0 & -1
+	\end{pmatrix}
+	,\ %
+	X = \begin{pmatrix}
+	x_1 \\ x_2
+	\end{pmatrix}
+	,\ %
+	b = \begin{pmatrix}
+		64 \\ 4 \\ 0 \\ 0
+	\end{pmatrix}
+\end{equation*}
+
+Вычислим градиент и гессиан целевой функции:
+
+\begin{equation*}
+	\nabla f(X) = \begin{pmatrix}
+		-34 x_1 + 8 x_2 + 182
+		\\
+		-46 x_2 + 8 x_1 + 266
+	\end{pmatrix}%
+	,\ \ %
+	H = \begin{pmatrix}
+		-34 & 8
+		\\
+		8 & -46	
+	\end{pmatrix}
+\end{equation*}
+
+В качестве начальной точки выберем $X^{(0)} = (0,\ 0)^T$
+
+\paragraph{Шаг 1. Определение матрицы активных ограничений в начальной точке.}
+
+Убедимся в допустимости градиентного направления:
+
+\begin{equation*}
+	A \nabla f(X^{(0)}) = \begin{pmatrix}
+	-1 && 0 \\ 0 && -1
+	\end{pmatrix}
+	\begin{pmatrix}
+	182 \\ 266
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	-182 \\ -266
+	\end{pmatrix}
+	< 0,
+\end{equation*}
+
+поэтому $K^{(0)} = \nabla f(X^{(0)}) = \begin{pmatrix}
+	182 & 266
+	\end{pmatrix}^T$
+
+\paragraph{Шаг 2. Выбор длины шага $t^{(0)}$}
+
+Найдём множество $I_{prev}$ индексов нарушаемых ограничений.
+
+\begin{equation*}
+	A K^{(0)} = \begin{pmatrix}
+		9 & 7
+		\\
+		-1 & 1
+		\\
+		-1 & 0
+		\\
+		0 & -1
+	\end{pmatrix}
+	\begin{pmatrix}
+		182 \\ 266
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		3500 \\ 84 \\ -182 \\ -266
+	\end{pmatrix}
+	\Rightarrow I_{prev} = \{1,\ 2\}
+\end{equation*}
+
+Тогда $t^{(0)} = min\{t^*,\ t_{prev_1},\ t_{prev_2}\}$
+
+\begin{equation*}
+	t^* = -\frac{\nabla^T f(X^{(0)}) K^{(0)}}{(K^{(0)})^T H K^{(0)}} = -\frac{(182\ 266) \begin{pmatrix} 182 \\ 266 \end{pmatrix}}{(182\ 266) \begin{pmatrix} -34 & 8 \\ 8 & -46 \end{pmatrix} \begin{pmatrix} 182 \\ 266 \end{pmatrix}} = 0.0288
+\end{equation*}
+
+\begin{equation*}
+	t_{prev_1} = \frac{b_1 - a_1 X^{(0)}}{a_1 K^{(0)}} = \frac{64 - (9\ 7) \cdot 0}{(9\ 7) \begin{pmatrix} 182 \\ 266 \end{pmatrix}} = \frac{64}{3500} = 0.0183
+\end{equation*}
+
+\begin{equation*}
+	t_{prev_2} = \frac{b_2 - a_2 X^{(0)}}{a_2 K^{(0)}} = \frac{4 - (-1\ 1) \cdot 0}{(-1\ 1) \begin{pmatrix} 182 \\ 266 \end{pmatrix}} = \frac{4}{84} = 0.0476
+\end{equation*}
+
+\begin{equation*}
+	t^{(0)} = t_{prev_1} = 0.0183
+\end{equation*}
+
+\begin{equation*}
+	X^{(1)} = X^{(0)} + t^{(0)} K^{(0)} = \begin{pmatrix}
+		0 \\ 0 
+	\end{pmatrix}
+	+
+	0.0183 \cdot \begin{pmatrix}
+		182 \\ 266 
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		3.3306 \\ 4.8678 
+	\end{pmatrix}
+\end{equation*}
+
+\paragraph{Шаг 3. Формирование матрицы активных ограничений}
+
+Определим оператор проекции и направлние $K^{(1)}$:
+
+\begin{equation*}
+	A = \begin{pmatrix} 9 & 7 \end{pmatrix},\ %
+	\nabla f(X^{(1)}) = \begin{pmatrix} 107.702 & 68.726 \end{pmatrix}^T
+\end{equation*}
+
+\begin{equation*}
+	A \nabla f(X^{(0)}) = \begin{pmatrix} 9 & 7 \end{pmatrix}
+	\begin{pmatrix} 107.702 \\ 68.726 \end{pmatrix}
+	=
+	1450.4
+	> 0,
+\end{equation*}
+
+направление градиента недопустимо.
+
+\begin{equation*}
+P = E - A^T \left(A A^T\right)^{-1} A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} - \begin{pmatrix} 0.6231 & 0.4846 \\ 0.4846 & 0.3769 \end{pmatrix} = \begin{pmatrix} 0.3769 & -0.4846 \\ -0.4846 & 0.6231 \end{pmatrix}
+\end{equation*}
+
+\begin{equation*}
+	K^{(1)} = P \nabla f(X^{(1)}) = \begin{pmatrix} 0.3769 & -0.4846 \\ -0.4846 & 0.6231 \end{pmatrix} \begin{pmatrix} 107.702 \\ 68.726 \end{pmatrix} = \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}
+\end{equation*}
+
+\paragraph{Шаг 4. Выбор длины шага $t^{(1)}$}
+
+Найдём множество $I_{prev}$ индексов нарушаемых ограничений.
+
+\begin{equation*}
+	A K^{(1)} = \begin{pmatrix}
+		9 & 7
+		\\
+		-1 & 1
+		\\
+		-1 & 0
+		\\
+		0 & -1
+	\end{pmatrix}
+	\begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}
+	=
+	\begin{pmatrix}
+		0 \\ -16.657 \\ -7.288 \\ 9.369
+	\end{pmatrix}
+	\Rightarrow I_{prev} = \{4\}
+\end{equation*}
+
+Тогда $t^{(0)} = min\{t^*,\ t_{prev_4}\}$
+
+\begin{equation*}
+	t^* = -\frac{\nabla^T f(X^{(1)}) K^{(1)}}{(K^{(1)})^T H K^{(1)}} = -\frac{(107.702\  68.726) \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}}{(7.288\ -9.369) \begin{pmatrix} -34 & 8 \\ 8 & -46 \end{pmatrix} \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}} = 0.02033
+\end{equation*}
+
+\begin{equation*}
+	t_{prev_4} = \frac{b_4 - a_4 X^{(1)}}{a_4 K^{(1)}} = \frac{0 - (0\ -1) \cdot \begin{pmatrix} 3.3306 \\ 4.8678 \end{pmatrix}}{(0\ -1) \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}} = \frac{4.8678}{9.369} = 0.519
+\end{equation*}
+
+\begin{equation*}
+	t^{(0)} = t^* = 0.02033
+\end{equation*}
+
+\begin{equation*}
+	X^{(2)} = X^{(1)} + t^{(1)} K^{(1)} = \begin{pmatrix}
+		3.3306 \\ 4.8678
+	\end{pmatrix}
+	+
+	0.02033 \cdot \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}
+	=
+	\begin{pmatrix}
+		3.479 \\ 4.677
+	\end{pmatrix}
+\end{equation*}
+
+\paragraph{Шаг 5. Выбор направления}
+
+
+
+\begin{equation*}
+	A = (0\ -1),\ 
+	\nabla f(X^{(2)}) = \begin{pmatrix} 
+		101.2544
+		\\ 
+		78.7437
+	\end{pmatrix}
+\end{equation*}
+
+\begin{equation*}
+	K^{(2)} = P \nabla f(X^{(2)}) = \begin{pmatrix} 
+		0.3769 & -0.4845 
+		\\ 
+		-0.4845 & 0.6231 
+	\end{pmatrix}
+	\begin{pmatrix} 
+		101.2544
+		\\ 
+		78.7437
+	\end{pmatrix}
+	=
+	\begin{pmatrix} 
+		0.0115
+		\\ 
+		0.0074
+	\end{pmatrix}
+\end{equation*}
+
+\end{document}
