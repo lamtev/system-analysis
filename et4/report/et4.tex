@@ -37,11 +37,16 @@
 			\end{cases}
 		\end{equation}
 	
-	\item Решить задачу методом наискорейшего подъема.
+	\item Решить задачу методом Била при ограничениях \ref{eq:bil-constraints}.
 	
-	\item Решить задачу методом Ньютона.	
+	\item Решить задачу методом проекции градиента при ограничениях \ref{eq:bil-constraints}.	
 	
-	\item Решить задачу методом сопряжённых градиентов.
+	\item Записать необходимые условия оптимальности для задачи при ограничени:
+	
+	\begin{equation}
+	\label{eq:quad-constraints}
+		9 x_1^2 + 25 x_2^2 \leq 225
+	\end{equation}
 
 	\item Решить задачу методом Бройдена.
 
@@ -87,9 +92,9 @@
 
 Согласно критерию Сильвестра $H$ - отрицательно определённая. Следовательно $(X^*,\ V^*)$ -- точка максимума $L(X, V)$, а точка $X^* = \left(\frac{17}{107},\ 4 \right)$ -- решение поставленной задачи.
 
-\subsection{Условия оптимальности}
+\subsection{Условия оптимальности для задачи с линейными ограничениями}
 
-Запишем необходимые условия оптимальности для задачи с ограничениями. Преобразуем систему с ограничениями \ref{eq:bil-constraints} к следующему виду:
+Запишем необходимые условия оптимальности для задачи с ограничениями \ref{eq:bil-constraints}. Преобразуем систему с ограничениями \ref{eq:bil-constraints} к следующему виду:
 
 \begin{equation*}
 	\begin{cases}
@@ -202,9 +207,9 @@
 		$X^{(0)}$ & $x_1$ & $x_2$ & $b$ \\ 
 		\hline 
 		$x_3$ & -9 & -7 & 63 \\ 
-		\hhline{|=|=||=|=|}
+		\hhline{|=|=#=#=|}
 		$x_4$ & 1 & \cellcolor{pink} -1 & 4 \\ 
-		\hhline{|=|=||=|=|}
+		\hhline{|=|=#=#=|}
 		$\frac{\partial f}{\partial x_r} \left(X^{(0)} \right)$ & 182 & 266 &  \\ 
 		\hline 
 	\end{tabular} 
@@ -246,49 +251,55 @@
 	\fontsize{13}{14}\selectfont
 	\begin{tabular}{|c||c||c|c|}
 		\hline 
-		$X^{(0)}$ & $x_1$ & $x_4$ & $b$ \\ 
-		\hhline{|=||=||=|=|} 
+		$X^{(1)}$ & $x_1$ & $x_4$ & $b$ \\ 
+		\hhline{|=#=#=|=|} 
 		$x_3$ & \cellcolor{pink} -16 & 7 & 35 \\ 
-		\hhline{|=||=||=|=|}
+		\hhline{|=#=#=|=|}
 		$x_2$ & 1 & -1 & 4 \\ 
 		\hline
-		$\frac{\partial f}{\partial x_r} \left(X^{(0)} \right)$ & 448 & -266 &  \\ 
+		$\frac{\partial f}{\partial x_r} \left(X^{(1)} \right)$ & 296 & -82 &  \\ 
 		\hline 
 	\end{tabular} 
 \end{center}
 \end{table}
 
 \begin{equation*}
-	f(X) = -17 x_1^2 - 23 (x_1 - x_4)^2 + 8 x_1 (x_1 - x_4) + 182 x_1 + 266 (x_1 - x_4)
+\begin{aligned}
+	f(X) = -17 x_1^2 - 23 (x_1 - x_4 + 4)^2 + 8 x_1 (x_1 - x_4 + 4) + 182 x_1 + 266 (x_1 - x_4 + 4) = \\ = -32 x_1^2 - 23 x_4^2 + 38 x_1 x_4 +296 x_1 - 82 x_4 + 696
+\end{aligned}
 \end{equation*}
 
-Решение $X^{(1)} = (0,\ 4,\, 35,\ 0)^T$ --- допустимое, но не оптимальное, т.к. $c = (448\ \ -266)^T \nleq 0$.
+\begin{equation*}
+	\frac{\partial f}{\partial x_1} = -64 x_1 + 38 x_4 + 296
+\end{equation*}
 
-Разрезающий столбец --- $x_1$, т.к. ей соответствует максимальная производная целевой функции --- 448.
+\begin{equation*}
+	\frac{\partial f}{\partial x_4} = 38 x_1 -46 x_4 -82
+\end{equation*}
+
+Решение $X^{(1)} = (0,\ 4,\, 35,\ 0)^T$ --- допустимое, но не оптимальное, т.к. $c = (296\ \ -82)^T \nleq 0$.
+
+Разрезающий столбец --- $x_1$, т.к. $x_1$ соответствует максимальная производная целевой функции --- 296.
 
 Определим разрезающую строку. Для этого найдём соотношение между приращением свободной переменной $x_1$ и изменениями базисных переменных $x_2$, $x_3$ и производной $\frac{\partial f}{\partial x_1} \left(X \right)$:
 
 \begin{equation*}
-	\frac{\partial f(X)}{\partial x_1} = -64 x_1 + 38 x_4 + 448
+	\frac{\partial f(X)}{\partial x_1} = 0 \Rightarrow x_1 = \frac{296}{64} = 4.625
 \end{equation*}
 
 \begin{equation*}
-	\frac{\partial f(X)}{\partial x_1} = 0 \Rightarrow x_1 = \frac{448}{64} = 7
+	x_3 = 0\ \ \Rightarrow x_1 = \frac{35}{16} = 2.1875
 \end{equation*}
 
 \begin{equation*}
-	x_3 = 0\ \ \Rightarrow x_1 = \frac{35}{16} \approx 2.188
-\end{equation*}
-
-\begin{equation*}
-	x_2 = 0 \Rightarrow \ \ \ x_1 = \frac{4}{1} = 4
+	x_2 = 0 \Rightarrow \ \ \ x_1 = -\frac{4}{1} = -4
 \end{equation*}
 
 Переменная $x_3$ обращается в нуль раньше остальных, поэтому ей соответствует разрезающая строка.
 
 Разрезающий элемент $-16$ выделен цветом в симплекс-таблице \ref{tab:simpl:2}. 
 
-\paragraph{Шаг 4. Пересчёт симплекс-таблицы базисного для решения $X^{(2)}$.}
+\paragraph{Шаг 4. Пересчёт симплекс-таблицы для базисного решения $X^{(2)}$}
 
 Пересчитаем симплекс-таблицу \ref{tab:simpl:2} и получим симплекс-таблицу \ref{tab:simpl:3}.
 
@@ -299,25 +310,114 @@
 	\def\tabcolsep{18pt}
 	\def\arraystretch{1.5}
 	\fontsize{13}{14}\selectfont
-	\begin{tabular}{|c|c|c|c|}
+	\begin{tabular}{|c|c||c||c|}
 		\hline 
-		$X^{(0)}$ & $x_3$ & $x_4$ & $b$ \\ 
+		$X^{(2)}$ & $x_3$ & $x_4$ & $b$ \\ 
 		\hline
-		$x_1$ & $-\frac{1}{16}$ & $\frac{7}{16}$ & \cellcolor{green} $\frac{35}{16}$ \\ 
+		$x_1$ & $-\frac{1}{16}$ & $\frac{7}{16}$ & $\frac{35}{16}$ \\ 
 		\hline
-		$x_2$ & $-\frac{1}{16}$ & -$\frac{9}{16}$ & \cellcolor{green} $\frac{99}{16}$ \\ 
+		$x_2$ & $-\frac{1}{16}$ & -$\frac{9}{16}$ & $\frac{99}{16}$ \\ 
 		\hline
-		$\frac{\partial f}{\partial x_r} \left(X^{(0)} \right)$ & -28 & -70 &  \\ 
+		$\frac{\partial f}{\partial x_r} \left(X^{(2)} \right)$ & $-\frac{78}{8}$ & $\frac{555}{8}$ &  \\ 
 		\hline 
 	\end{tabular} 
 \end{center}
 \end{table}
 
-
-Решение $X^{(2)} = \left(\frac{35}{16},\ \frac{99}{16} ,\, 0,\ 0\right)^T$ --- допустимое и оптимальное, т.к. $c = (-28\ \ -70)^T < 0$.
+\begin{equation*}
+	f = \frac{1}{8} \left( -x_3^2 - 100 x_4^2 - 5 x_3 x_4 - 78 x_3 + 555 x_4 + 9523 \right)
+\end{equation*}
 
 \begin{equation*}
-	X^* = \left(\frac{35}{16},\ \frac{99}{16} \right)\ \text{-- решение исходной задачи условной оптимизиции.}
+	\frac{\partial f}{\partial x_3} = \frac{1}{8} \left( -2 x_3 - 5 x_4 - 78 \right)
+\end{equation*}
+
+\begin{equation*}
+	\frac{\partial f}{\partial x_4} = \frac{1}{8} \left( -5 x_3 - 200 x_4 + 555 \right)
+\end{equation*}
+
+Решение $X^{(2)} = \left(\frac{35}{16},\ \frac{99}{16} ,\, 0,\ 0\right)^T$ --- допустимое, но не оптимальное, т.к. $c = (-\frac{78}{8}\ \ \frac{555}{8})^T \nleq 0$.
+
+Разрезающий столбец --- $x_4$, т.к. $x_4$ соответствует максимальная производная целевой функции --- $\frac{555}{8}$.
+
+Определим разрезающую строку. Для этого найдём соотношение между приращением свободной переменной $x_4$ и изменениями базисных переменных $x_1$, $x_2$ и производной $\frac{\partial f}{\partial x_4} \left(X \right)$:
+
+\begin{equation*}
+	x_1 = 0\ \ \Rightarrow x_4 = -\frac{35}{16} \Big/ \frac{7}{16} = -5
+\end{equation*}
+
+\begin{equation*}
+	x_2 = 0 \Rightarrow  x_4 = \frac{99}{16} \Big/ \frac{9}{16}= 11
+\end{equation*}
+
+\begin{equation*}
+	\frac{\partial f(X)}{\partial x_4} = 0 \Rightarrow x_4 = \frac{555}{200} = 2.775
+\end{equation*}
+
+Производная$\frac{\partial f}{\partial x_4} \left(X \right)$ обращается в нуль раньше остальных, поэтому введём новую переменную $u_1$:
+
+\begin{equation*}
+	u_1 = \frac{1}{2} \frac{\partial f}{\partial x_4} = \frac{1}{16} \left( -5 x_3 - 200 x_4 + 555 \right)
+\end{equation*}
+
+Внесём её в симплекс-таблицу \ref{tab:simpl:4}:
+
+\begin{table}[H]
+\begin{center}
+	\caption{Симплекс-таблица с $u_1$ для базисного решения $X^{(2)}$}
+	\label{tab:simpl:4}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c||c||c|}
+		\hline 
+		$X^{(2)}$ & $x_3$ & $x_4$ & $b$ \\ 
+		\hline
+		$x_1$ & $-\frac{1}{16}$ & $\frac{7}{16}$ & $\frac{35}{16}$ \\ 
+		\hline
+		$x_2$ & $-\frac{1}{16}$ & -$\frac{9}{16}$ & $\frac{99}{16}$ \\ 
+		\hhline{|=|=#=#=|}
+		$u_1$ & $ -\frac{5}{16}$ & \cellcolor{pink} $-\frac{200}{16}$ & $\frac{555}{16}$ \\ 
+		\hhline{|=|=#=#=|}
+	\end{tabular} 
+\end{center}
+\end{table}
+
+Разрезающий элемент $-\frac{200}{16}$ выделен цветом в симплекс-таблице \ref{tab:simpl:4}. 
+
+\paragraph{Шаг 5. Пересчёт симплекс-таблицы для базисного решения $X^{(3)}$.}
+
+Пересчитаем симплекс-таблицу \ref{tab:simpl:4} и получим симплекс-таблицу \ref{tab:simpl:5}.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Симплекс-таблица для базисного решения $X^{(3)}$}
+	\label{tab:simpl:5}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		$X^{(3)}$ & $x_3$ & $u_1$ & $b$ \\ 
+		\hline
+		$x_1$ & $-\frac{235}{3200}$ & $-\frac{7}{3200}$ & \cellcolor{green} $\frac{10885}{3200} = 3.402$ \\ 
+		\hline
+		$x_2$ & $-\frac{155}{3200}$ & $\frac{9}{3200}$ & \cellcolor{green} $\frac{14805}{3200} = 4.627$ \\ 
+		\hline
+		$x_4$ & $ -\frac{5}{3200}$ & $-\frac{16}{200}$ & $\frac{555}{3200} = 0.173$ \\ 
+		\hline
+	\end{tabular} 
+\end{center}
+\end{table}
+
+Решение $X^{(3)} = (3.402,\ 4.627,\, 0.173,\ 0)^T$ --- допустимое и оптимальное, т.к. $\frac{\partial f}{\partial x_3} (X^{(3)}) < 0$ и  $\frac{\partial f}{\partial u_1} (X^{(3)}) = 0$.
+
+Решение исходной задачи:
+
+\begin{equation*}
+	X^{*} = \begin{pmatrix}
+		3.402 \\ 4.627
+	\end{pmatrix}
 \end{equation*}
 
 \subsection{Метод проекции градиента}
@@ -344,7 +444,7 @@
 	\end{pmatrix}
 	,\ %
 	b = \begin{pmatrix}
-		64 \\ 4 \\ 0 \\ 0
+		63 \\ 4 \\ 0 \\ 0
 	\end{pmatrix}
 \end{equation*}
 
@@ -419,7 +519,7 @@
 \end{equation*}
 
 \begin{equation*}
-	t_{prev_1} = \frac{b_1 - a_1 X^{(0)}}{a_1 K^{(0)}} = \frac{64 - (9\ 7) \cdot 0}{(9\ 7) \begin{pmatrix} 182 \\ 266 \end{pmatrix}} = \frac{64}{3500} = 0.0183
+	t_{prev_1} = \frac{b_1 - a_1 X^{(0)}}{a_1 K^{(0)}} = \frac{63 - (9\ 7) \cdot 0}{(9\ 7) \begin{pmatrix} 182 \\ 266 \end{pmatrix}} = \frac{63}{3500} = 0.018
 \end{equation*}
 
 \begin{equation*}
@@ -427,7 +527,7 @@
 \end{equation*}
 
 \begin{equation*}
-	t^{(0)} = t_{prev_1} = 0.0183
+	t^{(0)} = t_{prev_1} = 0.018
 \end{equation*}
 
 \begin{equation*}
@@ -435,12 +535,12 @@
 		0 \\ 0 
 	\end{pmatrix}
 	+
-	0.0183 \cdot \begin{pmatrix}
+	0.018 \cdot \begin{pmatrix}
 		182 \\ 266 
 	\end{pmatrix}
 	=
 	\begin{pmatrix}
-		3.3306 \\ 4.8678 
+		3.276 \\ 4.788
 	\end{pmatrix}
 \end{equation*}
 
@@ -450,14 +550,14 @@
 
 \begin{equation*}
 	A = \begin{pmatrix} 9 & 7 \end{pmatrix},\ %
-	\nabla f(X^{(1)}) = \begin{pmatrix} 107.702 & 68.726 \end{pmatrix}^T
+	\nabla f(X^{(1)}) = \begin{pmatrix} 108.92 & 71.96 \end{pmatrix}^T
 \end{equation*}
 
 \begin{equation*}
 	A \nabla f(X^{(0)}) = \begin{pmatrix} 9 & 7 \end{pmatrix}
-	\begin{pmatrix} 107.702 \\ 68.726 \end{pmatrix}
+	\begin{pmatrix} 108.92 \\ 71.96 \end{pmatrix}
 	=
-	1450.4
+	1484
 	> 0,
 \end{equation*}
 
@@ -468,7 +568,7 @@ P = E - A^T \left(A A^T\right)^{-1} A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmat
 \end{equation*}
 
 \begin{equation*}
-	K^{(1)} = P \nabla f(X^{(1)}) = \begin{pmatrix} 0.3769 & -0.4846 \\ -0.4846 & 0.6231 \end{pmatrix} \begin{pmatrix} 107.702 \\ 68.726 \end{pmatrix} = \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}
+	K^{(1)} = P \nabla f(X^{(1)}) = \begin{pmatrix} 0.3769 & -0.4846 \\ -0.4846 & 0.6231 \end{pmatrix} \begin{pmatrix} 108.92 \\ 71.96 \end{pmatrix} = \begin{pmatrix} 6.18 \\ -7.94 \end{pmatrix}
 \end{equation*}
 
 \paragraph{Шаг 4. Выбор длины шага $t^{(1)}$}
@@ -485,26 +585,107 @@ P = E - A^T \left(A A^T\right)^{-1} A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmat
 		\\
 		0 & -1
 	\end{pmatrix}
-	\begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}
+	\begin{pmatrix} 6.18 \\ -7.94 \end{pmatrix}
 	=
 	\begin{pmatrix}
-		0 \\ -16.657 \\ -7.288 \\ 9.369
+		0.04 \\ -14.12 \\ -6.18 \\ 7.94
 	\end{pmatrix}
-	\Rightarrow I_{prev} = \{4\}
+	\Rightarrow I_{prev} = \{1,\ 4\}
 \end{equation*}
 
-Тогда $t^{(0)} = min\{t^*,\ t_{prev_4}\}$
+Тогда $t^{(1)} = min\{t^*,\ t_{prev_4}\}$
 
 \begin{equation*}
-	t^* = -\frac{\nabla^T f(X^{(1)}) K^{(1)}}{(K^{(1)})^T H K^{(1)}} = -\frac{(107.702\  68.726) \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}}{(7.288\ -9.369) \begin{pmatrix} -34 & 8 \\ 8 & -46 \end{pmatrix} \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}} = 0.02033
+	t^* = -\frac{\nabla^T f(X^{(1)}) K^{(1)}}{(K^{(1)})^T H K^{(1)}} = -\frac{(108.92\  71.96) \begin{pmatrix} 6.18 \\ -7.94 \end{pmatrix}}{(6.18\ -7.94) \begin{pmatrix} -34 & 8 \\ 8 & -46 \end{pmatrix} \begin{pmatrix} 6.18 \\ -7.94 \end{pmatrix}} = 0.0204
+\end{equation*}
+
+%\begin{equation*}
+%	t_{prev_1} = \frac{b_1 - a_1 X^{(1)}}{a_1 K^{(1)}} = \frac{63 - (9\ 7) \cdot \begin{pmatrix} 3.276 \\ 4.788 \end{pmatrix}}{(9\ 7) \begin{pmatrix} 6.18 \\ -7.94 \end{pmatrix}} = \frac{4.8678}{9.369} = 0.519
+%\end{equation*}
+
+\begin{equation*}
+	t_{prev_4} = \frac{b_4 - a_4 X^{(1)}}{a_4 K^{(1)}} = \frac{0 - (0\ -1) \cdot \begin{pmatrix} 3.276 \\ 4.788 \end{pmatrix}}{(0\ -1) \begin{pmatrix} 6.18 \\ -7.94 \end{pmatrix}} = \frac{4.788}{7.94} = 0.6
 \end{equation*}
 
 \begin{equation*}
-	t_{prev_4} = \frac{b_4 - a_4 X^{(1)}}{a_4 K^{(1)}} = \frac{0 - (0\ -1) \cdot \begin{pmatrix} 3.3306 \\ 4.8678 \end{pmatrix}}{(0\ -1) \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}} = \frac{4.8678}{9.369} = 0.519
+	t^{(1)} = t^* = 0.0204
 \end{equation*}
 
 \begin{equation*}
-	t^{(0)} = t^* = 0.02033
+	X^{(2)} = X^{(1)} + t^{(1)} K^{(1)} = \begin{pmatrix}
+		3.276 \\ 4.788
+	\end{pmatrix}
+	+
+	0.0204 \cdot \begin{pmatrix} 6.18 \\ -7.94 \end{pmatrix}
+	=
+	\begin{pmatrix}
+		3.4 \\ 4.63
+	\end{pmatrix}
+\end{equation*}
+
+\paragraph{Шаг 5. Выбор направления}
+
+\begin{equation*} 
+	\nabla f(X^{(2)}) = \begin{pmatrix} 
+		103.44
+		\\ 
+		80.22
+	\end{pmatrix}
+\end{equation*}
+
+\begin{equation*}
+	K^{(2)} = P \nabla f(X^{(2)}) = \begin{pmatrix} 
+		0.3769 & -0.4846 
+		\\ 
+		-0.4846  & 0.6231 
+	\end{pmatrix}
+	\begin{pmatrix} 
+		103.44
+		\\ 
+		80.22
+	\end{pmatrix}
+	=
+	\begin{pmatrix} 
+		0.111924 \\-0.141942
+	\end{pmatrix}
+\end{equation*}
+
+\paragraph{Шаг 6. Выбор длины шага $t^{(2)}$}
+
+\begin{equation*}
+	A K^{(2)} = \begin{pmatrix}
+		9 & 7
+		\\
+		-1 & 1
+		\\
+		-1 & 0
+		\\
+		0 & -1
+	\end{pmatrix}
+	\begin{pmatrix} 
+		-0.0172
+		\\ 
+		0.0241
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		0.014 \\ 0.041 \\ 0.017\\ -0.024
+	\end{pmatrix}
+	\Rightarrow I_{prev} = \{1,\ 2,\ 3\}
+\end{equation*}
+
+Тогда $t^{(2)} = min\{t^*,\ t_{prev_1}\}$
+
+\begin{equation*}
+	t^* = -\frac{\nabla^T f(X^{(2)}) K^{(2)}}{(K^{(2)})^T H K^{(2)}} = -\frac{(101.13\  78.69) \begin{pmatrix} -0.0172 \\ 0.0241 \end{pmatrix}}{(-0.0172\ 0.0241) \begin{pmatrix} -34 & 8 \\ 8 & -46 \end{pmatrix} \begin{pmatrix} -0.0172 \\ 0.0241 \end{pmatrix}} = 396
+\end{equation*}
+
+\begin{equation*}
+	t_{prev_1} = \frac{b_1 - a_1 X^{(2)}}{a_1 K^{(2)}} = \frac{63 - (0\ -1) \cdot \begin{pmatrix} 3.3306 \\ 4.8678 \end{pmatrix}}{(0\ -1) \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}} = \frac{4.8678}{9.369} = 0.519
+\end{equation*}
+
+\begin{equation*}
+	t^{(2)} = t^* = 0.02033
 \end{equation*}
 
 \begin{equation*}
@@ -515,40 +696,56 @@ P = E - A^T \left(A A^T\right)^{-1} A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmat
 	0.02033 \cdot \begin{pmatrix} 7.288 \\ -9.369 \end{pmatrix}
 	=
 	\begin{pmatrix}
-		3.479 \\ 4.677
+		3.402 \\ 4.627
 	\end{pmatrix}
 \end{equation*}
 
-\paragraph{Шаг 5. Выбор направления}
+\paragraph{Шаг 7. Проверка условий останова}
 
-
+Найдём вектор $\Lambda = - \left( A A^T \right)^{-1} A \nabla f (X^{(2)})$
 
 \begin{equation*}
-	A = (0\ -1),\ 
-	\nabla f(X^{(2)}) = \begin{pmatrix} 
-		101.2544
-		\\ 
-		78.7437
-	\end{pmatrix}
+\begin{aligned}
+	\Lambda = -\left( \begin{pmatrix} 9 && 7 \end{pmatrix} \begin{pmatrix} 9 \\ 7 \end{pmatrix} \right)^{-1} \begin{pmatrix} 9 && 7 \end{pmatrix} \begin{pmatrix} 107.13 \\ 78.69 \end{pmatrix} = - 11.65 < 0 \Rightarrow \\ \Rightarrow X^{(2)} = \begin{pmatrix}
+		3.402 \\ 4.627
+	\end{pmatrix}\ \text{-- оптимальное решение}
+\end{aligned}
 \end{equation*}
 
 \begin{equation*}
-	K^{(2)} = P \nabla f(X^{(2)}) = \begin{pmatrix} 
-		0.3769 & -0.4845 
-		\\ 
-		-0.4845 & 0.6231 
+	X^{*} = \begin{pmatrix}
+		3.402 \\ 4.627
 	\end{pmatrix}
-	\begin{pmatrix} 
-		101.2544
-		\\ 
-		78.7437
-	\end{pmatrix}
-	=
-	\begin{pmatrix} 
-		0.0115
-		\\ 
-		0.0074
-	\end{pmatrix}
+\end{equation*}
+
+\subsection{Условия оптимальности для задачи с нелинейными ограничениями}
+
+Запишем необходимые условия оптимальности для задачи с ограничениями \ref{eq:quad-constraints}. В данном случае необходимым условием оптимальности будет следующее условие Куна-Такера:
+
+\begin{equation*}
+\begin{cases}
+	\frac{\partial f}{\partial x_1} + u_1 \frac{\partial g_1}{\partial x_1} = 0
+	\\
+	\frac{\partial f}{\partial x_2} + u_1 \frac{\partial g_1}{\partial x_2} = 0
+	\\
+	u_1 g_1 = 0
+	\\
+	u_1 \leq 0
+\end{cases}
+\end{equation*}
+
+Подставим в него данные из ограничений \ref{eq:quad-constraints}:
+
+\begin{equation*}
+\begin{cases}
+	-34 x_1 + 8 x_2 + 188 + 18 x_1 u_1 = 0
+	\\
+	-46 x_2 + 8 x_1 + 266 + 50 x_2 u_1 = 0
+	\\
+	u_1 g_1 = 0
+	\\
+	u_1 \leq 0
+\end{cases}
 \end{equation*}
 
 \end{document}
