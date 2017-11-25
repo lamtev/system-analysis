@@ -48,7 +48,9 @@
 		9 x_1^2 + 25 x_2^2 \leq 225
 	\end{equation}
 
-	\item Решить задачу методом Бройдена.
+	\item Решить задачу методом штрафных функций при ограничении \ref{eq:quad-constraints}.
+	
+	\item Решить задачу методом возможных направлений Зойтендейка при ограничении \ref{eq:quad-constraints}.
 
 \end{enumerate}
 
@@ -91,6 +93,16 @@
 \end{equation*}
 
 Согласно критерию Сильвестра $H$ - отрицательно определённая. Следовательно $(X^*,\ V^*)$ -- точка максимума $L(X, V)$, а точка $X^* = \left(\frac{17}{107},\ 4 \right)$ -- решение поставленной задачи.
+
+На рис. \ref{pic:lagrange} изображены линии уровня целевой функции и траектория поиска решения:
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{lagrange}
+	\caption{Линии равного уровня целевой функции и траектория поиска решения}
+	\label{pic:lagrange}
+\end{center}
+\end{figure}
 
 \subsection{Условия оптимальности для задачи с линейными ограничениями}
 
@@ -163,13 +175,9 @@
 		\\
 		u_4 \cdot x_2 \Big|_{(x_1, x_2) = X^*} = 0
 		\\
-		u_1 \leq 0
+		u_i \leq 0,\ i = 1,2
 		\\
-		u_2 \leq 0
-		\\
-		u_3 \geq 0
-		\\
-		u_4 \geq 0\
+		u_j \geq 0,\ j = 3,4
 	\end{cases}
 \end{equation*}
 
@@ -420,6 +428,39 @@
 	\end{pmatrix}
 \end{equation*}
 
+В таблице \ref{tab:bil} приведена траектория поиска решения:
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения методом Била}
+	\label{tab:bil}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={i, x1, x2, f},
+	    column type/.add={|c|}{},
+	    columns/i/.style={fixed, precision=0, zerofill, column name={Шаг}},
+	    columns/x1/.style={fixed, precision=3, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=3, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=3, zerofill, column name={$f(X)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline, },
+	    every last row/.style={after row=\hline}
+	   ]{data/bil.csv}
+\end{center}
+\end{table}
+
+На рис. \ref{pic:bil} изображены линии уровня целевой функции и траектория поиска решения:
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{bil}
+	\caption{Линии равного уровня целевой функции и траектория поиска решения}
+	\label{pic:bil}
+\end{center}
+\end{figure}
+
 \subsection{Метод проекции градиента}
 
 Запишем ограничения \ref{eq:bil-constraints} в матричной форме:
@@ -619,7 +660,7 @@ P = E - A^T \left(A A^T\right)^{-1} A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmat
 	0.0204 \cdot \begin{pmatrix} 6.18 \\ -7.94 \end{pmatrix}
 	=
 	\begin{pmatrix}
-		3.4 \\ 4.63
+		3.4 \\ 4.6
 	\end{pmatrix}
 \end{equation*}
 
@@ -718,6 +759,39 @@ P = E - A^T \left(A A^T\right)^{-1} A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmat
 	\end{pmatrix}
 \end{equation*}
 
+В таблице \ref{tab:projection} приведена траектория поиска решения:
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения методом проекции градиента}
+	\label{tab:projection}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={i, x1, x2, f},
+	    column type/.add={|c|}{},
+	    columns/i/.style={fixed, precision=0, zerofill, column name={Шаг}},
+	    columns/x1/.style={fixed, precision=3, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=3, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=3, zerofill, column name={$f(X)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline, },
+	    every last row/.style={after row=\hline}
+	   ]{data/projection.csv}
+\end{center}
+\end{table}
+
+На рис. \ref{pic:projection} изображены линии уровня целевой функции и траектория поиска решения:
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{projection}
+	\caption{Линии равного уровня целевой функции и траектория поиска решения}
+	\label{pic:projection}
+\end{center}
+\end{figure}
+
 \subsection{Условия оптимальности для задачи с нелинейными ограничениями}
 
 Запишем необходимые условия оптимальности для задачи с ограничениями \ref{eq:quad-constraints}. В данном случае необходимым условием оптимальности будет следующее условие Куна-Такера:
@@ -747,5 +821,117 @@ P = E - A^T \left(A A^T\right)^{-1} A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmat
 	u_1 \leq 0
 \end{cases}
 \end{equation*}
+
+\subsection{Метод штрафных функций}
+
+Решим задачу методом штрафных функций при ограничении \ref{eq:quad-constraints}. Для этого обозначим ограничение функцией:
+
+\begin{equation*}
+	g(X) = 9 x_1^2 + 25 x_2^2 - 225
+\end{equation*}
+
+Вместо задачи условной оптимизации будем решать эквивалентную задачу безусловной оптимизации. Введём штрафную функцию $F(x)$ и штраф за нарушение ограничений исходной задачи $\psi(x)$:
+
+\begin{equation*}
+\psi(x) = \max \left\{ 0, x \right\}
+\end{equation*}
+\begin{equation*}
+F(X, \mu) = f(X) - \mu \psi(g(X))
+\end{equation*}
+
+В таблице \ref{tab:penalty} приведена траектория поиска решения методом штрафных функций.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения методом штрафных функций}
+	\label{tab:penalty}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={i,mu, x1, x2, f},
+	    column type/.add={|c|}{},
+	    columns/i/.style={string type, column name={Шаг}},
+	    columns/mu/.style={fixed, precision=3, zerofill, column name={$\mu$}},
+	    columns/x1/.style={fixed, precision=3, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=3, zerofill, column name={$x_2$}},
+	    columns/f/.style={fixed, precision=3, zerofill, column name={$f(X)$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline, },
+	    every last row/.style={after row=\hline}
+	   ]{data/penalty.csv}
+\end{center}
+\end{table}
+
+На рис. \ref{pic:penalty} изображены линии уровня целевой функции и траектория поиска решения:
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{penalty}
+	\caption{Линии равного уровня целевой функции и траектория поиска решения}
+	\label{pic:penalty}
+\end{center}
+\end{figure}
+
+\subsection{Метод возможных направлений Зойтендейка}
+
+Решим задачу методом возможных направлений Зойтендейка при ограничении \ref{eq:quad-constraints}.
+
+При поиске на границе области формулируется вспомогательная задача линейного программирования:
+\begin{equation*}
+\begin{cases}
+	\max(u)
+	\\
+	\left\langle f'(X^{(i)}, K^{(i)} \right\rangle \geq u
+	\\
+	\left\langle g_l'(X^{(i)}, K^{(i)} \right\rangle \geq u, l \in I
+	\\
+	u \geq 0,\ -1 \leq K_J^{(i)} \leq 1,\ j = 1 \dots n
+\end{cases}
+\end{equation*}
+
+В таблице \ref{tab:penalty} приведена траектория поиска решения методом возможных направлений.
+
+\begin{table}[H]
+\begin{center}
+	\caption{Траектория поиска решения методом возможных направлений}
+	\label{tab:available}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.0}
+	\fontsize{13}{14}\selectfont
+	\pgfplotstabletypeset[col sep=comma,
+	    columns={i, x1, x2, u, f, k1, k2},
+	    column type/.add={|c|}{},
+	    columns/i/.style={string type, column name={Шаг}},
+	    columns/x1/.style={fixed, precision=3, zerofill, column name={$x_1$}},
+	    columns/x2/.style={fixed, precision=3, zerofill, column name={$x_2$}},
+	    columns/u/.style={fixed, precision=3, zerofill, column name={$u$}},
+	    columns/f/.style={fixed, precision=3, zerofill, column name={$f(X)$}},
+	    columns/k1/.style={fixed, precision=3, zerofill, column name={$k_1$}},
+	    columns/k2/.style={fixed, precision=3, zerofill, column name={$k_2$}},
+	    every nth row={1}{before row=\hline},
+	    every head row/.style={before row=\hline, after row=\hline, },
+	    every last row/.style={after row=\hline}
+	   ]{data/available.csv}
+\end{center}
+\end{table}
+
+На рис. \ref{pic:available} --- \ref{pic:available-zoom} изображены линии уровня целевой функции и траектория поиска решения крупным планом и в приближении соответственно:
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.91]{available}
+	\caption{Линии равного уровня целевой функции и траектория поиска решения}
+	\label{pic:available}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=1]{available_zoom}
+	\caption{Линии равного уровня целевой функции и траектория поиска решения}
+	\label{pic:available-zoom}
+\end{center}
+\end{figure}
 
 \end{document}
