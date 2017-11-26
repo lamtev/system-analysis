@@ -1,0 +1,552 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Задание}
+
+Решить задачу коммивояжера методом ветвей и границ в соответствии с матрицей расстояний между городами (таблица \ref{tab:1})
+ 
+\begin{table}[H]
+\begin{center}
+	\caption{Матрица расстояний между городами}
+	\label{tab:1}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c|c|c|}
+		\hline 
+	  	& 1 & 2 & 3 & 4 & 5 & 6 \\ 
+		\hhline{|=#=|=|=|=|=|=|} 
+		1 & $\infty$ & $28$ & $47$ & $27$ & $28$ & $40$ \\ 
+		\hline 
+		2 & $20$ & $\infty$ & $20$ & $31$ & $15$ & $28$ \\ 
+		\hline 
+		3 & $34$ & $14$ & $\infty$ & $28$ & $20$ & $24$ \\ 
+		\hline 
+		4 & $25$ & $23$ & $27$ & $\infty$ & $46$ & $18$ \\ 
+		\hline 
+		5 & $24$ & $11$ & $20$ & $33$ & $\infty$ & $43$ \\ 
+		\hline 
+		6 & $32$ & $21$ & $18$ & $13$ & $32$ & $\infty$ \\ 
+		\hline 
+	\end{tabular}  
+\end{center}
+\end{table} 
+ 
+Задача коммивояжера: имеется n городов, задана матрица расстояний между городами. Коммивояжер должен побывать в каждом городе только один раз и вернуться в начальный город. Требуется найти маршрут, имеющий \textbf{минимальную} длину. 
+ 
+Построить дерево переходов.
+
+\section{Решение}
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c|c|c||c|}
+		\hline 
+	  	& 1 & 2 & 3 & 4 & 5 & 6 & $min$ \\ 
+		\hhline{|=#=|=|=|=|=|=#=|} 
+		1 & $\infty$ & $28$ & $47$ & $27$ & $28$ & $40$ & 27\\ 
+		\hline 
+		2 & $20$ & $\infty$ & $20$ & $31$ & $15$ & $28$ & 15\\ 
+		\hline 
+		3 & $34$ & $14$ & $\infty$ & $28$ & $20$ & $24$ & 14\\ 
+		\hline 
+		4 & $25$ & $23$ & $27$ & $\infty$ & $46$ & $18$ & 18\\ 
+		\hline 
+		5 & $24$ & $11$ & $20$ & $33$ & $\infty$ & $43$ & 11\\ 
+		\hline 
+		6 & $32$ & $21$ & $18$ & $13$ & $32$ & $\infty$ & 13\\ 
+		\hline 
+	\end{tabular}  
+\end{center}
+\end{table} 
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c|c|c|}
+		\hline 
+	  	& 1 & 2 & 3 & 4 & 5 & 6 \\ 
+		\hhline{|=#=|=|=|=|=|=|} 
+		1 & $\infty$ & $1$ & $20$ & $0$ & $1$ & $13$ \\ 
+		\hline 
+		2 & $5$ & $\infty$ & $5$ & $15$ & $0$ & $13$ \\ 
+		\hline 
+		3 & $20$ & $0$ & $\infty$ & $14$ & $6$ & $10$ \\ 
+		\hline 
+		4 & $7$ & $5$ & $9$ & $\infty$ & $28$ & $0$ \\ 
+		\hline 
+		5 & $13$ & $0$ & $9$ & $22$ & $\infty$ & $32$ \\ 
+		\hline 
+		6 & $19$ & $8$ & $5$ & $0$ & $19$ & $\infty$ \\ 
+		\hhline{|=#=|=|=|=|=|=|}
+		$min$ & $5$ & $0$ & $5$ & $0$ & $0$ & $0$ \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table} 
+
+\noindent $h = 108$\\
+$V(G^{(0)}) = h = 108$
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c|c|c|}
+		\hline 
+	  	& 1 & 2 & 3 & 4 & 5 & 6 \\ 
+		\hhline{|=#=|=|=|=|=|=|} 
+		1 & $\infty$ & $1$ & $15$ & $0$ & $1$ & $13$ \\ 
+		\hline 
+		2 & $0$ & $\infty$ & $0$ & $15$ & $0$ & $13$ \\ 
+		\hline 
+		3 & $15$ & $0$ & $\infty$ & $14$ & $6$ & $10$ \\ 
+		\hline 
+		4 & $2$ & $5$ & $4$ & $\infty$ & $28$ & $0$ \\ 
+		\hline 
+		5 & $8$ & $0$ & $4$ & $22$ & $\infty$ & $32$ \\ 
+		\hline 
+		6 & $14$ & $8$ & $0$ & $0$ & $19$ & $\infty$ \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table} 
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c|c|c|}
+		\hline 
+	  	& 1 & 2 & 3 & 4 & 5 & 6 \\ 
+		\hhline{|=#=|=|=|=|=|=|} 
+		1 & -- & -- & -- & $1$ & -- & -- \\ 
+		\hline 
+		2 & $2$ & -- & $0$ & -- & $1$ & -- \\ 
+		\hline 
+		3 & -- & $6$ & -- & -- & -- & -- \\ 
+		\hline 
+		4 & -- & -- & -- & -- & -- & \cellcolor{pink} $12$ \\ 
+		\hline 
+		5 & -- & $4$ & -- & -- & -- & -- \\ 
+		\hline 
+		6 & -- & -- & $0$ & $0$ & -- & -- \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table} 
+
+\noindent $max = 12\ \Rightarrow 4 \rightarrow 6$\\
+$G^{(0)} = G(46) \cup G(\overline{46})$\\
+$V(G(\overline{46})) = V(G^{(0)}) + 12 = 120$\\
+Запретим переход $6 \rightarrow 4$.
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c|c||c|}
+		\hline 
+	  	& 1 & 2 & 3 & 4 & 5 & $min$\\ 
+		\hhline{|=#=|=|=|=|=#=|} 
+		1 & $\infty$ & $1$ & $15$ & $0$ & $1$ & $0$ \\ 
+		\hline 
+		2 & $0$ & $\infty$ & $0$ & $15$ & $0$ & $0$ \\ 
+		\hline 
+		3 & $15$ & $0$ & $\infty$ & $14$ & $6$ & $0$ \\ 
+		\hline 
+		5 & $8$ & $0$ & $4$ & $22$ & $\infty$ & $0$ \\ 
+		\hline 
+		6 & $14$ & $8$ & $0$ & $\cancelto{\infty}{0}$ & 19 & $0$ \\
+		\hhline{|=#=|=|=|=|=#=|}
+		$min$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table}
+
+\noindent $V(G(46)) = V(G^{(0)}) = 108$
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c|c|c|}
+		\hline 
+	  	& 1 & 2 & 3 & 4 & 5 \\ 
+		\hhline{|=#=|=|=|=|=|} 
+		1 & -- & -- & -- & \cellcolor{pink} $15$ & -- \\ 
+		\hline 
+		2 & $8$ & -- & $0$ & -- & $1$ \\ 
+		\hline 
+		3 & -- & $6$ & -- & -- & -- \\ 
+		\hline 
+		5 & -- & $4$ & -- & -- & -- \\ 
+		\hline 
+		6 & -- & -- & $8$ & -- & -- \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table}
+
+\noindent $max = 15\ \Rightarrow 1 \rightarrow 4$\\
+$G(46) = G(46,\ 14) \cup G(46,\ \overline{14})$\\
+$V(G(46,\ \overline{14})) = V(G(46)) + 15 = 108 + 15 = 123$\\
+Запретим переход $6 \rightarrow 1$.
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c||c|}
+		\hline 
+	  	& 1 & 2 & 3 & 5 & $min$\\ 
+		\hhline{|=#=|=|=|=#=|} 
+		2 & $0$ & $\infty$ & $0$ & $0$ & $0$ \\ 
+		\hline 
+		3 & $15$ & $0$ & $\infty$ & $6$ & $0$ \\ 
+		\hline 
+		5 & $8$ & $0$ & $4$ & $\infty$ & $0$ \\ 
+		\hline 
+		6 & $\cancelto{\infty}{14}$ & $8$ & $0$ & 19 & $0$ \\
+		\hhline{|=#=|=|=|=#=|}
+		$min$ & $0$ & $0$ & $0$ & $0$ & $0$ \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table}
+
+\noindent $V(G(46,\ 14)) = V(G(46)) = 108$
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|c|}
+		\hline 
+	  	& 1 & 2 & 3 & 5 \\ 
+		\hhline{|=#=|=|=|=|} 
+		2 & \cellcolor{pink} $8$ & -- & $0$ & $6$ \\ 
+		\hline 
+		3 & -- & $6$ & -- & -- \\ 
+		\hline 
+		5 & -- & $4$ & -- & -- \\ 
+		\hline 
+		6 & -- & -- & \cellcolor{pink} $8$ & -- \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table}
+
+\begin{itemize}
+	\item $max = 8\ \Rightarrow 2 \rightarrow 1$\\
+	
+	$G(46,\ 14) = G(46,\ 14,\ 21) \cup G(46,\ 14,\ \overline{21})$\\
+	$V(G(46,\ 14,\ \overline{21})) = V(G(46,\ 14)) + 8 = 108 + 8 = 116$\\
+	Запретим переход $6 \rightarrow 2$.
+
+	\begin{table}[H]
+	\begin{center}
+		\def\tabcolsep{18pt}
+		\def\arraystretch{1.5}
+		\fontsize{13}{14}\selectfont
+		\begin{tabular}{|c||c|c|c||c|}
+			\hline 
+	  		& 2 & 3 & 5 & $min$\\ 
+			\hhline{|=#=|=|=#=|} 
+			3 & $0$ & $\infty$ & $6$ & $0$ \\ 
+			\hline 
+			5 & $0$ & $4$ & $\infty$ & $0$ \\ 
+			\hline 
+			6 & $\cancelto{\infty}{8}$ & $0$ & $19$ & $0$ \\
+			\hhline{|=#=|=|=#=|}
+			$min$ & $0$ & $0$ & $6$ & $6$ \\
+			\hline
+		\end{tabular}  
+	\end{center}
+	\end{table}
+
+	\begin{table}[H]
+	\begin{center}
+		\def\tabcolsep{18pt}
+		\def\arraystretch{1.5}
+		\fontsize{13}{14}\selectfont
+		\begin{tabular}{|c||c|c|c|}
+			\hline 
+	  		& 2 & 3 & 5 \\ 
+			\hhline{|=#=|=|=|} 
+			3 & $0$ & $\infty$ & $0$ \\ 
+			\hline 
+			5 & $0$ & $4$ & $\infty$ \\ 
+			\hline 
+			6 & $\cancelto{\infty}{8}$ & $0$ & $13$ \\
+			\hline
+		\end{tabular}  
+	\end{center}
+	\end{table}
+
+	$V(G(46,\ 14,\ 21)) = V(G(46,\ 14)) + 6 = 108 + 6 = 114$\\
+	
+	
+	\item $max = 8\ \Rightarrow 6 \rightarrow 3$\\
+	
+	$G(46,\ 14) = G(46,\ 14,\ 63) \cup G(46,\ 14,\ \overline{63})$\\
+	$V(G(46,\ 14,\ \overline{63})) = V(G(46,\ 14)) + 8 = 108 + 8 = 116$\\
+	Запретим переход $6 \rightarrow 2$.
+
+	\begin{table}[H]
+	\begin{center}
+		\def\tabcolsep{18pt}
+		\def\arraystretch{1.5}
+		\fontsize{13}{14}\selectfont
+		\begin{tabular}{|c||c|c|c||c|}
+			\hline 
+	  		& 1 & 2 & 5 & $min$\\ 
+			\hhline{|=#=|=|=#=|} 
+			2 & $0$ & $\infty$ & $0$ & $0$ \\ 
+			\hline 
+			3 & $\cancelto{\infty}{15}$ & $0$ & $6$ & $0$ \\ 
+			\hline 
+			5 & $8$ & $0$ & $\infty$ & $0$ \\
+			\hhline{|=#=|=|=#=|}
+			$min$ & $0$ & $0$ & $0$ & $0$ \\
+			\hline
+		\end{tabular}  
+	\end{center}
+	\end{table}
+
+	$V(G(46,\ 14,\ 63)) = V(G(46,\ 14)) + 0 = 108$\\
+	
+\end{itemize}
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|}
+		\hline 
+	  	& 1 & 2 & 5 \\ 
+		\hhline{|=#=|=|=|} 
+		2 & \cellcolor{pink} $8$ & -- & $6$ \\ 
+		\hline 
+		3 & -- & $6$ & -- \\ 
+		\hline 
+		5 & -- & \cellcolor{pink} $8$ & -- \\ 
+		\hline 
+	\end{tabular}  
+\end{center}
+\end{table}
+
+\begin{itemize}
+	\item $max = 8\ \Rightarrow 2 \rightarrow 1$\\
+	
+	$G(46,\ 14, 63) = G(46,\ 14, 63,\ 21) \cup G(46,\ 14,\ 63,\ \overline{21})$\\
+	$V(G(46,\ 14,\ 63,\ \overline{21})) = V(G(46,\ 14,\ 63)) + 8 = 108 + 8 = 116$\\
+	Запретим переход $3 \rightarrow 2$.
+
+	\begin{table}[H]
+	\begin{center}
+		\def\tabcolsep{18pt}
+		\def\arraystretch{1.5}
+		\fontsize{13}{14}\selectfont
+		\begin{tabular}{|c||c|c||c|}
+			\hline 
+	  		& 2 & 5 & $min$\\ 
+			\hhline{|=#=|=#=|} 
+			3 & $\cancelto{\infty}{0}$ & $6$ & $6$ \\ 
+			\hline 
+			5 & $0$ & $\infty$ & $0$ \\ 
+			\hhline{|=#=|=#=|}
+			$min$ & $0$ & $0$ & $6$ \\
+			\hline
+		\end{tabular}  
+	\end{center}
+	\end{table}
+
+	\begin{table}[H]
+	\begin{center}
+		\def\tabcolsep{18pt}
+		\def\arraystretch{1.5}
+		\fontsize{13}{14}\selectfont
+		\begin{tabular}{|c||c|c|}
+			\hline 
+	  		& 2 & 5\\ 
+			\hhline{|=#=|=|} 
+			3 & $\cancelto{\infty}{0}$ & $0$ \\ 
+			\hline 
+			5 & $0$ & $\infty$ \\ 
+			\hline
+		\end{tabular}  
+	\end{center}
+	\end{table}
+
+	$V(G(46,\ 14,\ 63,\ 21)) = V(G(46,\ 14,\  63)) + 6 = 108 + 6 = 114$\\
+	
+	
+	\item $max = 8\ \Rightarrow 5 \rightarrow 2$\\
+	
+	$G(46,\ 14, 63) = G(46,\ 14,\ 63,\ 52) \cup G(46,\ 14,\ 63,\ \overline{52})$\\
+	$V(G(46,\ 14,\ 63,\ \overline{52})) = V(G(46,\ 14,\ 63)) + 8 = 108 + 8 = 116$\\
+	Запретим переход $2 \rightarrow 5$.
+
+	\begin{table}[H]
+	\begin{center}
+		\def\tabcolsep{18pt}
+		\def\arraystretch{1.5}
+		\fontsize{13}{14}\selectfont
+		\begin{tabular}{|c||c|c||c|}
+			\hline 
+	  		& 1 & 5 & $min$\\ 
+			\hhline{|=#=|=#=|} 
+			2 & $0$ & $\cancelto{\infty}{0}$ & $0$ \\ 
+			\hline 
+			3 & $\infty$ & $0$ & $0$ \\ 
+			\hhline{|=#=|=#=|}
+			$min$ & $0$ & $6$ & $6$ \\
+			\hline
+		\end{tabular}  
+	\end{center}
+	\end{table}
+
+	\begin{table}[H]
+	\begin{center}
+		\def\tabcolsep{18pt}
+		\def\arraystretch{1.5}
+		\fontsize{13}{14}\selectfont
+		\begin{tabular}{|c||c|c|}
+			\hline 
+	  		& 1 & 5\\ 
+			\hhline{|=#=|=|} 
+			2 & $0$ & $\cancelto{\infty}{0}$ \\ 
+			\hline 
+			3 & $\infty$ & $0$ \\ 
+			\hline
+		\end{tabular}  
+	\end{center}
+	\end{table}
+
+	$V(G(46,\ 14,\ 63,\ 52)) = V(G(46,\ 14,\  63)) + 6 = 108 + 6 = 114$\\
+	
+\end{itemize}
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|}
+		\hline 
+	  	& 2 & 3 & 5 \\ 
+		\hhline{|=#=|=|=|} 
+		3 & $0$ & $\infty$ & $0$ \\ 
+		\hline 
+		5 & $0$ & $4$ & $\infty$ \\ 
+		\hline 
+		6 & $\cancelto{\infty}{8}$ & $0$ & $13$ \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c|c|}
+		\hline 
+	  	& 2 & 3 & 5 \\ 
+		\hhline{|=#=|=|=|} 
+		3 & $0$ & -- & $13$ \\ 
+		\hline 
+		5 & $4$ & -- & -- \\ 
+		\hline 
+		6 & -- & \cellcolor{pink} $17$ & -- \\
+		\hline
+	\end{tabular}  
+\end{center}
+\end{table}
+
+$max = 17\ \Rightarrow 5 \rightarrow 2$\\
+	
+$G(46,\ 14, 21) = G(46,\ 14, 21,\ 63) \cup G(46,\ 14,\ 21,\ \overline{63})$\\
+$V(G(46,\ 14,\ 21,\ \overline{63})) = V(G(46,\ 14,\ 21)) + 17 = 114 + 17 = 131$\\
+Запретим переход $3 \rightarrow 2$.
+
+\begin{table}[H]
+\begin{center}
+	\def\tabcolsep{18pt}
+	\def\arraystretch{1.5}
+	\fontsize{13}{14}\selectfont
+	\begin{tabular}{|c||c|c||c|}
+		\hline 
+	  	& 2 & 5 & $min$ \\ 
+		\hhline{|=#=|=#=|} 
+		3 & $\cancelto{\infty}{0}$ & $0$ & $0$\\ 
+		\hline 
+		5 & $0$ & $\infty$ & $0$ \\ 		
+		\hhline{|=#=|=#=|}
+		$min$ & $0$ & $0$ & $0$ \\
+		\hline		
+	\end{tabular}  
+\end{center}
+\end{table}
+
+$V(G(46,\ 14,\ 21,\ 63)) = V(G(46,\ 14,\ 21)) + 0 = 114$\\
+
+Остаётся ещё 2 пути: $3 \rightarrow 5$ и $5 \rightarrow 2$.
+
+Кратчайший маршрут: $4 \rightarrow 6 \rightarrow 3 \rightarrow 5 \rightarrow 2 \rightarrow 1 \rightarrow 4$.
+
+Длина кратчайшего маршрута: $114$.
+
+На рис. \ref{pic:graph} изображено дерево, иллюстрирующее ход решения и оценки подмножеств:
+
+\begin{figure}[H]
+\begin{center}
+	\begin{forest}
+	for tree={circle,draw, l sep=40pt, s sep=60pt}
+	[108 
+	    [108, edge label={node[midway,left] {$4 \rightarrow 6$}}  
+	      [108, edge label={node[midway,left] {$1 \rightarrow 4$}} 
+	      	[114, edge label={node[midway,left] {$2 \rightarrow 1$}}
+	      		[114, edge label={node[midway,left] {$6 \rightarrow 3$}}
+	      			[114, edge label={node[midway,left] {$3 \rightarrow 5$}}
+	      				[114, edge label={node[midway,left] {$5 \rightarrow 2$}}]
+	      			]
+	      		]
+	      		[131, edge label={node[midway,right] {$\xcancel{6 \rightarrow 3}$}}]
+	      	]
+	      	[116, edge label={node[midway,left] {$\xcancel{2 \rightarrow 1}$}}]
+	      	[108, edge label={node[midway,right] {$6 \rightarrow 3$}}
+	      		[114, edge label={node[midway,left] {$2 \rightarrow 1$}}]
+	      		[116, edge label={node[midway,right] {$\xcancel{2 \rightarrow 1}$}}]
+	      	]
+	      	[116, edge label={node[midway,right] {$\xcancel{6 \rightarrow 3}$}}]
+	      ] 
+	      [123, edge label={node[midway,right] {$\xcancel{1 \rightarrow 4}$}}] 
+	    ]
+	    [120, edge label={node[midway,right] {$\xcancel{4 \rightarrow 6}$}}]
+	   ]
+	]
+	\end{forest}
+	\caption{Дерево переходов}
+	\label{pic:graph}
+\end{center}
+\end{figure}
+\end{document}

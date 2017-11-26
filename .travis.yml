@@ -13,6 +13,8 @@ matrix:
     - env: ET="et2"
     - env: ET="et3"
     - env: ET="et4"
+    - env: ET="et5"
+    - env: ET="et6"
 
 script:
   - docker run -v $TRAVIS_BUILD_DIR:/sysan lamtev/latex:full /bin/bash -c " cd sysan/${ET}/report && pdflatex ${ET}.tex && pdflatex ${ET}.tex "
