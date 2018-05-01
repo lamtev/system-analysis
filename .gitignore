@@ -1,12 +1,10 @@
 *.aux
 *.toc
+*.tof
+*.tol
 *.pdf
 *.dvi
 *.out
 *.gz
 *.log
 .idea
-build
-__pycache__
-db
-.ipynb_checkpoints

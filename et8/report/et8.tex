@@ -1,0 +1,114 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Задание}
+
+\textbf{Задача АС9}\\
+
+Компания решила довести число своих машин до $N$. Президент компании интересуется, как будут справляться с ремонтом имеющиеся $R$ механиков. Средняя скорость прибытия на ремонт равна $K$ $\frac{\text{раз}}{\text{час}}$ для каждой машины, средняя скорость обслуживания – $M$  $\frac{\text{машин}}{\text{час}}$. Если число ожидающих ремонта машин становится больше, чем число ремонтируемых машин, то механики отказываются от перекуров и увеличивают скорость обслуживания на $25$\%.\\
+
+Определить:
+\begin{itemize}
+	\item вероятность того, что все машины работают и механики отдыхают
+	\item среднее число ожидающих ремонта машин
+	\item среднее число машин в системе (машины в очереди и на обслуживании)
+	\item среднее время ожидания начала ремонта
+	\item среднее время нахождения в системе (ожидание и ремонт)
+\end{itemize}
+
+Исходные данные:\\
+
+\begin{equation*}
+	N = 9,\ \ K = 0.05,\ \ M = 0.5,\ \ R = 2
+\end{equation*}
+
+\section{Решение}
+
+В постановке задачи описана СМО M/M/2//9. На рис. \ref{pic:smo-model} представлена модель такой СМО.
+
+%\begin{figure}[H]
+%\begin{center}
+%	\includegraphics[width=1\textwidth]{smo-model}
+%	\caption{Модель СМО}
+%	\label{pic:smo-model}
+%\end{center}
+%\end{figure}
+
+Построим граф гибели и размножения, он изображен на рис. \ref{pic:smo-graph}.
+
+%\begin{figure}[H]
+%\begin{center}
+%	\includegraphics[width=1\textwidth]{smo-graph}
+%	\caption{Граф гибели-размножения СМО}
+%	\label{pic:smo-graph}
+%\end{center}
+%\end{figure}
+
+Составим и решим систему уравнений \ref{eq:1}.
+
+\begin{equation}
+\label{eq:1}
+\begin{cases}
+	P_0 \cdot 9 \lambda = P_1 \cdot \mu_0 \\
+	P_1 \cdot 8 \lambda = P_2 \cdot 2 \mu_0 \\
+	P_2 \cdot 7 \lambda = P_3 \cdot 2 \mu_0 \\
+	P_3 \cdot 6 \lambda = P_4 \cdot 2 \mu_0 \\
+	P_4 \cdot 5 \lambda = P_5 \cdot 2 \mu_0 \\
+	P_5 \cdot 4 \lambda = P_6 \cdot 2 \mu_0 \\
+	P_6 \cdot 3 \lambda = P_7 \cdot 2 \mu_0 \\
+	P_7 \cdot 2 \lambda = P_8 \cdot 2 \mu_1 \\
+	P_8 \cdot 1 \lambda = P_9 \cdot 2 \mu_1 \\
+	\sum P_i = 1
+\end{cases}
+\begin{cases}
+	P_1 = P_0 \cdot \frac{9 \lambda}{\mu_0} \\
+	P_2 = P_0 \cdot \frac{36 \lambda^2}{\mu_0^2} \\
+	P_3 = P_0 \cdot \frac{126 \lambda^3}{\mu_0^3} \\
+	P_4 = P_0 \cdot \frac{378 \lambda^4}{\mu_0^4} \\
+	P_5 = P_0 \cdot \frac{945 \lambda^5}{\mu_0^5} \\
+	P_6 = P_0 \cdot \frac{1890 \lambda^6}{\mu_0^6} \\
+	P_7 = P_0 \cdot \frac{2835 \lambda^7}{\mu_0^7} \\
+	P_8 = P_0 \cdot \frac{2835 \lambda^7}{\mu_0^7 \mu_1} \\
+	P_9 = P_0 \cdot \frac{2835 \lambda^7}{2 \mu_0^7 \mu_1^2} \\
+	\sum P_i = 1
+\end{cases}
+\begin{cases}
+	P_0 = 0.41060 \\
+	P_1 = 0.36954 \\
+	P_2 = 0.14782 \\
+	P_3 = 0.05174 \\
+	P_4 = 0.01552 \\
+	P_5 = 0.00388 \\
+	P_6 = 0.00078 \\
+	P_7 = 0.00078 \\ 
+	P_8 = 9.31246 \cdot 10^{-6} \\
+	P_9 = 3.72498 \cdot 10^{-7} \\
+\end{cases}
+\end{equation}
+
+Вычислим свойства системы:
+
+\begin{equation*}
+	\not{\lambda} = \sum_{i = 0}^9 \frac{9 - i}{9} \cdot \lambda \cdot P_i = 0.04497
+\end{equation*}
+
+\begin{equation*}
+	\not{n_0} = \sum_{i = 3}^9 (i - 2) \cdot P_i = 0.10146
+\end{equation*}
+
+\begin{equation*}
+	\not{j} = \sum_{i = 0}^9 i \cdot P_i = 0.91203
+\end{equation*}
+
+\begin{equation*}
+	\not{t_0} = \frac{\not{n_0}}{\not{\lambda}} = 2.25638
+\end{equation*}
+
+\begin{equation*}
+	\not{t} = \frac{\not{j}}{\not{\lambda}} = 20.28268
+\end{equation*}
+
+\end{document}
