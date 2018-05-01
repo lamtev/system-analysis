@@ -27,7 +27,7 @@
 
 \section{Решение}
 
-В постановке задачи описана СМО M/M/2//9. На рис. \ref{pic:smo-model} представлена модель такой СМО.
+В постановке задачи описана СМО M/M/2//9\\ с $\lambda = 0.05$ и $\mu = \begin{cases} \mu_0 = 0.5,\ \ \text{заявок в очереди} \leq \text{заявок на обслуживании}\\ 1.25 \mu_0,\ \  \text{иначе}\end{cases}$. %На рис. \ref{pic:smo-model} представлена модель такой СМО.
 
 %\begin{figure}[H]
 %\begin{center}
@@ -37,15 +37,50 @@
 %\end{center}
 %\end{figure}
 
-Построим граф гибели и размножения, он изображен на рис. \ref{pic:smo-graph}.
+Построим граф гибели-размножения, он изображен на рис. \ref{pic:smo-graph}.
 
-%\begin{figure}[H]
-%\begin{center}
-%	\includegraphics[width=1\textwidth]{smo-graph}
-%	\caption{Граф гибели-размножения СМО}
-%	\label{pic:smo-graph}
-%\end{center}
-%\end{figure}
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.75cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (0) {0};
+  \node[main node] (1) [right of = 0]{1};
+  \node[main node] (2) [right of = 1] {2};
+  \node[main node] (3) [right of = 2] {3};
+  \node[main node] (4) [right of = 3] {4};
+  \node[main node] (5) [right of = 4] {5};
+  \node[main node] (6) [right of = 5] {6};
+  \node[main node] (7) [right of = 6] {7};
+  \node[main node] (8) [right of = 7] {8};
+  \node[main node] (9) [right of = 8] {9};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge [bend left] node[above] {$9\lambda$} (1)
+    (1) edge [bend left] node[above] {$8\lambda$} (2)
+    (2) edge [bend left] node[above] {$7\lambda$} (3)
+    (3) edge [bend left] node[above] {$6\lambda$} (4)
+    (4) edge [bend left] node[above] {$5\lambda$} (5)
+    (5) edge [bend left] node[above] {$4\lambda$} (6)
+    (6) edge [bend left] node[above] {$3\lambda$} (7)
+    (7) edge [bend left] node[above] {$2\lambda$} (8)
+    (8) edge [bend left] node[above] {$\lambda$} (9)
+    
+    (9) edge [bend left]  node[below]   {$2\mu_1$} (8)
+    (8) edge [bend left] node[below] {$2\mu_1$} (7)
+    (7) edge [bend left] node[below] {$2\mu_0$} (6)
+    (6) edge [bend left] node[below] {$2\mu_0$} (5)
+    (5) edge [bend left] node[below] {$2\mu_0$} (4)
+    (4) edge [bend left] node[below] {$2\mu_0$} (3)
+    (3) edge [bend left] node[below] {$2\mu_0$} (2)
+    (2) edge [bend left] node[below] {$2\mu_0$} (1)
+    (1) edge [bend left] node[below] {$\mu_0$} (0);
+  
+\end{tikzpicture}
+\caption{Граф гибели-размножения СМО}
+\label{pic:smo-graph}
+\end{center}
+\end{figure}
 
 Составим и решим систему уравнений \ref{eq:1}.
 
@@ -110,5 +145,11 @@
 \begin{equation*}
 	\not{t} = \frac{\not{j}}{\not{\lambda}} = 20.28268
 \end{equation*}
+
+\noindent Вероятность того, что все машины работают и механики отдыхают $= 0.41060$\\
+Среднее число ожидающих ремонта машин $= 0.10146$\\
+Среднее число машин в системе $= 0.91203$\\
+Среднее время ожидания начала ремонта $= 2.25638$\\
+Среднее время нахождения в системе $= 20.28268$\\
 
 \end{document}

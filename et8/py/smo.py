@@ -35,9 +35,9 @@ p7 = p0 * c7
 p8 = p0 * c8
 p9 = p0 * c9
 
-print(p0 + p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9)
-
 ps = [p0, p1, p2, p3, p4, p5, p6, p6, p8, p9]
+
+print(sum(ps))
 
 i: int = 0
 for p in ps:
