@@ -1,0 +1,139 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Задание}
+
+Задана сеть массового обслуживания, включающая $M = 4$ узла и источник с интенсивностью $\lambda_0$, заданы матрица передач и описание узлов как систем массового обслуживания (число каналов, интенсивность обслуживания).
+
+\begin{itemize}
+	\item $\lambda_0 = 0.5$
+	\item Матрица передач:
+	\begin{equation*}
+		\mathbb{P} = \begin{pmatrix}
+			0 & 1 & 0 & 0 & 0 \\
+			\sfrac{1}{9} & 0 & \sfrac{7}{18} & 0 & \sfrac{1}{2} \\
+			0 & \sfrac{7}{11} & 0 & 0 & \sfrac{4}{11} \\
+			0 & \sfrac{7}{12} & \sfrac{5}{12} & 0 & 0 \\
+			0 & 0 & 0 & 1 & 0
+		\end{pmatrix}
+	\end{equation*}
+	\item 1 узел: система $M/M/3$, $\mu = 9$
+	\item 2 узел: система $M/M/3$, $\mu = 4$
+	\item 3 узел: система $M/M/1$, $\mu = 9$
+	\item 4 узел: система $M/M/2$, $\mu = 4$
+\end{itemize}
+
+Необходимо:
+
+\begin{enumerate}
+	\item Построить граф сети;
+	\item Выяснить, может ли данная сеть работать в установившемся режиме;
+	\item Для заданной интенсивности $\lambda_0$:
+		\begin{enumerate}[label*=\arabic*]
+			\item Определить наиболее и наименее нагруженные узлы;
+			\item Определить среднее число требований, среднее число ожидающих требований,
+			среднее время пребывания и среднее время ожидания для каждого узла;
+			\item Определить среднее число требований, среднее число ожидающих требований,
+			среднее время пребывания и среднее время ожидания для всей сети;
+			\item Результаты оформить в итоговой таблице.
+		\end{enumerate}
+\end{enumerate}
+
+\section{Построение графа сети}
+
+На рис. \ref{pic:nmo-graph} изображён граф сети.
+
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=2pt,auto,node distance=5cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (0) {0};
+  \node[main node] (1) [right of = 0]{1};
+  \node[main node] (2) [above right of = 1] {2};
+  \node[main node] (3) [below right of = 2] {3};
+  \node[main node] (4) [below left of = 3] {4};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge [bend left] node[above] {$1$} (1)
+    (1) edge [bend left] node[above] {$\sfrac{7}{18}$} (2)
+    (1) edge [bend right] node[below] {$\sfrac{1}{2}$} (4)
+    (2) edge [bend left] node[below] {$\sfrac{7}{11}$} (1)
+    (2) edge             node[pos=0.8] {$\sfrac{4}{11}$} (4)
+    (3) edge [bend right] node[above] {$\sfrac{5}{12}$} (2)
+    (3) edge             node[pos=0.8] {$\sfrac{7}{12}$} (1)
+    (4) edge [bend right] node[below] {$1$} (3)
+    
+    (1) edge [bend left] node[below] {$\sfrac{1}{9}$} (0);
+  
+\end{tikzpicture}
+\caption{Граф сети}
+\label{pic:nmo-graph}
+\end{center}
+\end{figure}
+
+\section{Вычисление интенсивностей потоков в узлах}
+
+Вычислим коэффициенты передачи от источника к $i$-ому узлу $\alpha_i = \sfrac{\lambda_i}{\lambda_0}$:
+\begin{equation*}
+	\begin{cases}
+		\lambda_0 = \sfrac{1}{9} \lambda_1 \\
+		\lambda_1 = \lambda_0 + \sfrac{7}{11} \lambda_2 + \sfrac{7}{12} \lambda_3 \\
+		\lambda_2 = \sfrac{7}{18} \lambda_1 + \sfrac{5}{12} \lambda_3 \\
+		\lambda_3 = \lambda_4 \\
+		\lambda_4 = \sfrac{1}{1} \lambda_1 + \sfrac{4}{11} \lambda_2 \\
+	\end{cases} \Leftrightarrow \begin{cases}
+		\lambda_1 = 9 \lambda_0 \\
+		\lambda_2 = \sfrac{4257}{672} \lambda_0 \\
+		\lambda_3 = \sfrac{381}{56} \lambda_0 \\
+		\lambda_4 = \sfrac{381}{56} \lambda_0
+	\end{cases} \Rightarrow \begin{cases}
+		\alpha_1 = 9 \\
+		\alpha_2 = \sfrac{4257}{672} \\
+		\alpha_3 = \sfrac{381}{56} \\
+		\alpha_4 = \sfrac{381}{56}
+	\end{cases}
+\end{equation*}
+
+\section{Проверка наличия установившегося режима}
+
+Выполним проверку условия наличия установившегося режима сети:
+
+\begin{equation*}
+	\lambda_0 < \min \limits_{(j)} \left( \frac{m_j \cdot \mu_j}{\alpha_j} \right)
+\end{equation*}
+
+\begin{equation*}
+	 \min \limits_{(j)} \left( \frac{m_j \cdot \mu_j}{\alpha_j} \right) \approx min \left(3,\ 1.9,\ 1.3,\ 1.2 \right) = 1.2 > \lambda_0 = 0.5
+\end{equation*}
+
+Режим установился.
+
+\section{Разрезание сети}
+
+Выполним разрезание сети и рассчитаем локальные показатели узлов сети, после чего произведем <<сборку>> сети, рассчитав интегральные показатели сети по теореме Джонсона. В таблице \ref{tab:results} приведены результаты рассчитанных показателей для отдельных узлов и для всей сети.
+\begin{table}[H]
+	\begin{center}
+		\caption{Результаты}
+		\label{tab:results}
+		\def\tabcolsep{4pt}
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline
+			& 1 узел & 2 узел & 3 узел & 4 узел & Вся сеть \\
+			\hline
+			Ср. число требований $\not{n}$ & $0.503 $ & $0.81  $ & $0.6077$ & $1.0382$ & $2.9589$ \\
+			\hline
+			Ср. число ожидающих требований $\not{l}$ & $0.003 $ & $0.0182$ & $0.2297$ & $0.1877$ & $0.4386$ \\
+			\hline
+			Ср. время пребывания $\not{t_\text{с}}$ & $0.1118$ & $0.2557$ & $0.1786$ & $0.3052$ & $5.9178$ \\
+			\hline
+			Ср. время ожидания $\not{t_\text{ож}}$ & $0.0007$ & $0.0057$ & $0.0675$ & $0.0552$ & $0.8772$ \\
+			\hline	
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\end{document}
