@@ -67,3 +67,23 @@ print('Среднее время ожидания начала ремонта = 
 
 t_av = j_av / lam_av
 print('Среднее время нахождения в системе = {x}'.format(x=t_av))
+
+k3 = ps[1] + 2 * sum(ps[2:9])
+print(k3)
+
+t_o = (j_av - k3) / lam_av / (9 - j_av)
+print(t_o)
+
+
+mu_av = 0
+i = 0
+for p in ps:
+    mu_av += p * (mu0 if i < 7 else mu1)
+    i += 1
+print(mu_av)
+
+x_av = 1 / mu_av
+print(x_av)
+
+t_c = t_o + x_av
+print(t_c)

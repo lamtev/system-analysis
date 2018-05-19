@@ -131,6 +131,14 @@
 \end{equation*}
 
 \begin{equation*}
+	\not{\mu} = \sum_{i = 0}^9 \mu_i \cdot P_i = 0.50042
+\end{equation*}
+
+\begin{equation*}
+	\not{x} = \frac{1}{\not{\mu}} = 1.99829
+\end{equation*}
+
+\begin{equation*}
 	\not{n_0} = \sum_{i = 3}^9 (i - 2) \cdot P_i = 0.10146
 \end{equation*}
 
@@ -139,17 +147,21 @@
 \end{equation*}
 
 \begin{equation*}
-	\not{t_0} = \frac{\not{n_0}}{\not{\lambda}} = 2.25638
+	\not{K_\text{з}} = P_1 + 2 \cdot (P_2 + \dots + P_9) = 0.81057
 \end{equation*}
 
 \begin{equation*}
-	\not{t} = \frac{\not{j}}{\not{\lambda}} = 20.28268
+	\not{t_\text{ож}} = \frac{\not{j} - \not{K_\text{з}}}{\not{\lambda}(9 - \not{j})} = 0.27898
 \end{equation*}
 
-\noindent Вероятность того, что все машины работают и механики отдыхают $= 0.41060$\\
-Среднее число ожидающих ремонта машин $= 0.10146$\\
-Среднее число машин в системе $= 0.91203$\\
-Среднее время ожидания начала ремонта $= 2.25638$\\
-Среднее время нахождения в системе $= 20.28268$\\
+\begin{equation*}
+	\not{t_\text{с}} = \not{t_\text{ож}} + \not{x} = 2.27727
+\end{equation*}
+
+\noindent Вероятность того, что все машины работают и механики отдыхают $P_0 = 0.41060$\\
+Среднее число ожидающих ремонта машин $\not{n_0} = 0.10146$\\
+Среднее число машин в системе $\not{j} = 0.91203$\\
+Среднее время ожидания начала ремонта $\not{t_\text{ож}} = 0.27898$\\
+Среднее время нахождения в системе $\not{t_\text{с}} = 2.27727$\\
 
 \end{document}
