@@ -17,6 +17,7 @@ matrix:
     - env: ET="et6"
     - env: ET="et7"
     - env: ET="et8"
+    - env: ET="et9"
     - env: ET="et10"
     - env: ET="et11"
 
